@@ -15,13 +15,15 @@ const Home = () => {
     <div className="w-full overflow-x-hidden bg-[#171A34]">
       {/* Header */}
       <header className="fixed top-0 left-0 w-full z-30 flex justify-between items-center px-4 sm:px-6 h-[60px] sm:h-[85px] text-white bg-[#fff] bg-opacity-25 backdrop-blur-md">
-        <Image
-          src="/HamburgerIcon.svg"
-          alt="Menu"
-          width={40}
-          height={14}
-          className="sm:w-[57px] sm:h-[18px]"
-        />
+        <div className="w-[120px]">
+          <Image
+            src="/HamburgerIcon.svg"
+            alt="Menu"
+            width={40}
+            height={14}
+            className="sm:w-[57px] sm:h-[18px]"
+          />
+        </div>
         <Image
           src="/HeaderLogo.png"
           alt="HeaderLogo"
@@ -50,7 +52,7 @@ const Home = () => {
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center">
-          <p className="text-white text-sm sm:text-lg md:text-xl font-light mb-4 sm:mb-6 max-w-[90%] sm:max-w-3xl leading-relaxed">
+          <p className="text-white text-sm sm:text-lg md:text-xl font-light mb-4 sm:mb-6 max-w-[90%] sm:max-w-3xl leading-relaxed font-lato italic">
             Experience premium living, curated deals, and direct access to top
             developers — all in one place.
           </p>
@@ -59,12 +61,15 @@ const Home = () => {
 
         {/* CTA */}
         <div className="absolute bottom-[20px] left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center text-center space-y-4 w-[90%] sm:w-auto">
-          <button className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
+          <button className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 lg:mb-[100px] sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
             Register Now
           </button>
-          <div className="text-white text-lg sm:text-[32px] font-light">
-            <span className="font-semibold">A Glimpse</span> of Unlimited
-            Possibilities.
+          <div className="text-white text-[32px] md:text-[40px] font-light text-center font-chronicle">
+            A{" "}
+            <span className="font-semibold underline decoration-[#2597EF] decoration-4 underline-offset-[6px]">
+              Glimpse
+            </span>{" "}
+            of Unlimited Possibilities.
           </div>
         </div>
 
@@ -212,21 +217,21 @@ const Home = () => {
                 <input
                   type="text"
                   placeholder="Name"
-                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic"
+                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
                 />
                 <input
                   type="email"
                   placeholder="Email ID"
-                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none"
+                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
                 />
                 <input
                   type="tel"
                   placeholder="Phone No"
-                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none"
+                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
                 />
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 sm:py-2.5 bg-white text-[#171A34] font-medium rounded-md hover:opacity-90 flex justify-center items-center gap-2 text-sm sm:text-[16px]"
+                  className="w-full px-4 py-2 sm:py-2.5 bg-white text-[#171A34] font-medium rounded-md hover:opacity-90 flex justify-center items-center gap-2 text-sm sm:text-[16px] font-lato italic"
                 >
                   Next <span className="text-base sm:text-lg">➜</span>
                 </button>

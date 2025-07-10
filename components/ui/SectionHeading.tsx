@@ -12,7 +12,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
   underlineLeading = false, // default is false
 }) => {
   return (
-    <h2 className="text-white text-[32px] md:text-[40px] font-light text-center">
+    <h2 className="text-white text-[32px] md:text-[40px] font-light text-center font-chronicle">
       {underlineLeading ? (
         <>
           <span className="font-semibold underline decoration-[#2597EF] decoration-4 underline-offset-[6px]">
