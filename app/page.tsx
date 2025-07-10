@@ -42,7 +42,7 @@ const Home = () => {
             src="/HeroPurpleBG.png"
             alt="Hero Background"
             layout="fill"
-            objectFit="cover"
+            objectFit="fill"
             quality={100}
             priority
           />
