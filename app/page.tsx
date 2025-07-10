@@ -49,7 +49,7 @@ const Home = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-20 flex flex-col items-center">
+        <div className="relative z-10 flex flex-col items-center">
           <p className="text-white text-sm sm:text-lg md:text-xl font-light mb-4 sm:mb-6 max-w-[90%] sm:max-w-3xl leading-relaxed">
             Experience premium living, curated deals, and direct access to top
             developers — all in one place.
