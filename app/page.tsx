@@ -49,8 +49,8 @@ const Home = () => {
           />
         </div>
 
-        <div className="relative z-10 mt-[15%] lg:mt-[0px] flex flex-col items-center">
-          <p className="text-white text-sm sm:text-lg md:text-xl font-light mb-4 sm:mb-6 max-w-[90%] sm:max-w-3xl leading-relaxed font-lato italic">
+        <div className="relative z-10 flex flex-col items-center">
+          <p className="text-white text-sm sm:text-lg md:text-xl font-light mb-[15%] sm:mb-6 max-w-[90%] sm:max-w-3xl leading-relaxed font-lato italic">
             Experience premium living, curated deals, and direct access to top
             developers — all in one place.
           </p>
@@ -58,8 +58,8 @@ const Home = () => {
         </div>
 
         {/* Mobile-only centered content */}
-        <div className="sm:hidden flex flex-col items-center z-50 justify-center flex-grow">
-          <div className="w-full absolute px-4 top-[44%]">
+        <div className="sm:hidden flex flex-col items-center z-50 justify-start flex-grow">
+          <div className="w-full absolute bottom-0 px-4">
             <Image
               src="/HeroPeopleBG.png"
               alt="People Foreground"
@@ -79,7 +79,7 @@ const Home = () => {
             />
           </div>
 
-          <div className="relative  z-20 flex flex-col items-center space-y-6 mb-4 sm:mb-6 w-full mt-[15%]">
+          <div className="relative mt-[15%] z-20 flex flex-col items-center space-y-6 mb-4 sm:mb-6 w-full">
             <button className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
               Register Now
             </button>

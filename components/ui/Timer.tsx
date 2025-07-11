@@ -31,23 +31,21 @@ const Timer = () => {
   const keys = ["Days", "Hours", "Minutes", "Seconds"];
 
   return (
-    <div className="flex sm:flex-row flex-wrap justify-center text-white mt-[8px] sm:mt-[10px] gap-2 sm:gap-4 sm:space-x-0 sm:items-center sm:justify-center">
-      <div className="grid grid-cols-2 sm:flex sm:flex-row gap-4 sm:gap-0">
+    <div className="flex flex-row flex-wrap justify-center text-white mt-2 px-2 sm:px-4 lg:px-6 gap-2 sm:gap-4 items-center">
+      <div className="flex flex-row gap-2 sm:gap-4">
         {keys.map((label, index) => (
           <div key={label} className="flex flex-col items-center relative">
             {label === "Days" && (
-              <span className="text-white text-xs sm:text-sm mb-1 absolute left-3 sm:left-5 -top-5 sm:-top-6">
+              <span className="text-white text-xs sm:text-sm mb-1 absolute left-2 sm:left-4 -top-5 sm:-top-6">
                 Days
               </span>
             )}
             <div className="flex flex-row items-center">
-              <div className="bg-[#fff] bg-opacity-20 backdrop-blur-sm w-[80px] xs:w-[100px] sm:w-[162px] h-[120px] xs:h-[140px] sm:h-[227px] text-[40px] xs:text-[50px] sm:text-[80px] font-bold flex items-center justify-center rounded-[20px] sm:rounded-[30px]">
+              <div className="bg-[#fff] bg-opacity-20 backdrop-blur-sm w-[70px] sm:w-[100px] lg:w-[162px] h-[100px] sm:h-[140px] lg:h-[227px] text-[35px] sm:text-[50px] lg:text-[80px] font-bold flex items-center justify-center rounded-[15px] sm:rounded-[30px]">
                 {padded(timeLeft[label])}
               </div>
-
-              {/* Show colons only on sm and up */}
               {index !== keys.length - 1 && (
-                <p className="hidden sm:block w-[16px] xs:w-[20px] sm:w-[30px] text-[40px] xs:text-[50px] sm:text-[80px] ml-1 sm:ml-2">
+                <p className="w-[14px] sm:w-[20px] lg:w-[30px] text-[35px] sm:text-[50px] lg:text-[80px] ml-1 sm:ml-2">
                   :
                 </p>
               )}
