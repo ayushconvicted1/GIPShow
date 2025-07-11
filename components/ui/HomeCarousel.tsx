@@ -49,14 +49,6 @@ export default function FocusProjectCarousel() {
     return () => clearInterval(interval);
   }, []);
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % projects.length);
-  };
-
   return (
     <div className="relative h-[360px] sm:h-[540px] w-full flex justify-center items-center overflow-x-visible px-[5%]">
       <div className="relative w-[120%] sm:w-[950px] h-[360px] sm:h-[540px]">
@@ -65,9 +57,11 @@ export default function FocusProjectCarousel() {
             (index - currentIndex + projects.length) % projects.length;
           const isActive = index === currentIndex;
           const zIndex = projects.length - relativeIndex;
-          const offsetX = relativeIndex * 40; // Increased offset for mobile overflow
+          const offsetX = relativeIndex * 40;
           const scale = 1 - relativeIndex * 0.03;
-          const opacity = relativeIndex === 0 ? 1 : 0.5;
+          const blur = relativeIndex === 0 ? "blur(0)" : "blur(4px)";
+          const brightness =
+            relativeIndex === 0 ? "brightness(1)" : "brightness(0.8)";
 
           return (
             <motion.div
@@ -76,13 +70,18 @@ export default function FocusProjectCarousel() {
               style={{
                 zIndex,
                 transform: `translateX(${offsetX}px) scale(${scale})`,
-                opacity,
+                filter: `${blur} ${brightness}`,
               }}
-              initial={{ opacity: 0, x: 100 }}
+              initial={{
+                opacity: 0,
+                x: 100,
+                filter: "blur(4px) brightness(0.8)",
+              }}
               animate={{
-                opacity,
+                opacity: 1,
                 x: offsetX,
                 scale,
+                filter: `${blur} ${brightness}`,
               }}
               transition={{ duration: 0.6 }}
             >
@@ -116,19 +115,6 @@ export default function FocusProjectCarousel() {
           );
         })}
       </div>
-      {/* Navigation Buttons */}
-      <button
-        onClick={handlePrev}
-        className="absolute left-2 sm:left-[5%] top-1/2 transform -translate-y-1/2 text-white"
-      >
-        <FaRegArrowAltCircleLeft size={20} className="sm:w-[24px]" />
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute right-2 sm:right-[5%] top-1/2 transform -translate-y-1/2 text-white"
-      >
-        <FaRegArrowAltCircleRight size={20} className="sm:w-[24px]" />
-      </button>
     </div>
   );
 }
