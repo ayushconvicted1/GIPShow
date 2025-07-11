@@ -19,6 +19,23 @@ body {
   font-style: normal;
 }
 
+.people-image-wrapper img {
+  transition: transform 0.3s ease;
+  transform-origin: bottom center;
+}
+
+@media (max-height: 850px) {
+  .people-image-wrapper img {
+    transform: scale(0.88);
+  }
+}
+
+@media (max-height: 800px) {
+  .people-image-wrapper img {
+    transform: scale(0.82);
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

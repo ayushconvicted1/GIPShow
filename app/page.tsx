@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <div className="w-full overflow-x-hidden bg-[#171A34]">
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-30 flex justify-between items-center px-4 sm:px-6 h-[60px] sm:h-[85px] text-white bg-[#fff] bg-opacity-25 backdrop-blur-md">
+      <header className="fixed top-0 left-0 w-full z-30 flex justify-between items-center pl-4 sm:pl-6 h-[60px] sm:h-[85px] text-white bg-[#fff] bg-opacity-25 backdrop-blur-md">
         <div className="w-[120px]">
           <Image
             src="/HamburgerIcon.svg"
@@ -37,8 +37,7 @@ const Home = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative w-full min-h-screen pt-[80px] sm:pt-[120px] text-center px-4 sm:px-6 overflow-hidden">
-        {/* Purple Background */}
+      <section className="relative w-full min-h-screen pt-[80px] sm:pt-[120px] text-center px-4 sm:px-6 overflow-hidden flex flex-col">
         <div className="absolute inset-0 z-10">
           <Image
             src="/HeroPurpleBG.png"
@@ -50,7 +49,6 @@ const Home = () => {
           />
         </div>
 
-        {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center">
           <p className="text-white text-sm sm:text-lg md:text-xl font-light mb-4 sm:mb-6 max-w-[90%] sm:max-w-3xl leading-relaxed font-lato italic">
             Experience premium living, curated deals, and direct access to top
@@ -59,118 +57,77 @@ const Home = () => {
           <Timer />
         </div>
 
-        {/* CTA */}
-        <div className="absolute bottom-[20px] left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center text-center space-y-4 w-[90%] sm:w-auto">
-          <button className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 lg:mb-[100px] sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
+        {/* Spacer to push CTA and Heading to the bottom */}
+        <div className="flex-grow"></div>
+
+        {/* CTA and Heading */}
+        <div className="relative z-20 flex flex-col items-center justify-end space-y-6 mb-4 sm:mb-6">
+          {/* Register Button */}
+          <button className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
             Register Now
           </button>
-          <div className="text-white text-[32px] md:text-[40px] font-light text-center font-chronicle">
+
+          {/* Heading */}
+          <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] font-light text-center font-chronicle w-[90%] sm:w-auto">
             A{" "}
             <span className="font-semibold underline decoration-[#2597EF] decoration-4 underline-offset-[6px]">
               Glimpse
             </span>{" "}
             of Unlimited Possibilities.
-          </div>
+          </h2>
         </div>
 
         {/* People Image */}
-        <div className="absolute lg:bottom-0 sm:bottom-[50%] left-1/2 transform -translate-x-1/2 w-full max-w-[90%] sm:max-w-[56%] z-10">
-          <Image
-            src="/HeroPeopleBG.png"
-            width={1000}
-            height={200}
-            layout="intrinsic"
-            objectFit="contain"
-            alt="People Foreground"
-            className="w-full"
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(to bottom, black 80%, transparent 100%)",
-              maskImage:
-                "linear-gradient(to bottom, black 80%, transparent 100%)",
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-            }}
-          />
-        </div>
-      </section>
-
-      {/* Section 2 - Transition Image & Content */}
-      <section className="bg-[#17203d]/80 text-white text-lg sm:text-2xl overflow-hidden">
-        {/* Fade-in Section Image */}
-        <div className="w-full z-10 relative">
-          <div className="absolute left-[45%] sm:left-[49%] top-[50%] transform -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-10 w-full px-4 sm:px-0 people-image-wrapper">
+          <div className="mx-auto w-full sm:w-[52%]">
             <Image
-              src="/PlayBtn.svg"
-              height={40}
-              width={40}
-              alt="Play"
-              className="sm:w-[62px] sm:h-[62px]"
+              src="/HeroPeopleBG.png"
+              alt="People Foreground"
+              width={1000}
+              height={600}
+              layout="intrinsic"
+              objectFit="contain"
+              className="w-full h-auto"
+              style={{
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, black 80%, transparent 100%)",
+                maskImage:
+                  "linear-gradient(to bottom, black 80%, transparent 100%)",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+              }}
             />
           </div>
-          <Image
-            src="/Section2Top.png"
-            layout="responsive"
-            width={1920}
-            height={150}
-            objectFit="cover"
-            alt="Section Transition"
-            className="w-full opacity-70"
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(to bottom, transparent 0%, black 60%, black 100%)",
-              maskImage:
-                "linear-gradient(to bottom, transparent 0%, black 60%, black 100%)",
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-            }}
-          />
         </div>
       </section>
 
-      <section className="bg-[#171a34]/80 text-white text-lg sm:text-2xl overflow-hidden pt-[40px] sm:pt-[80px]">
+      {/* Event Section */}
+      <section className="bg-[#171a34]/80 text-white pt-[40px] sm:pt-[80px]">
         <SectionHeading
           leadingText="Our Event."
           highlightText="Unlimited Possibilities"
         />
         <div className="flex flex-wrap justify-center gap-4 sm:gap-0 sm:justify-between mt-[40px] sm:mt-[80px] px-[5%] sm:px-[10%]">
-          <Image
-            src="/Possibilities4.png"
-            height={300}
-            width={180}
-            alt="Possibilities"
-            className="w-[45%] sm:w-[270px] h-[300px] sm:h-[450px] object-cover"
-          />
-          <Image
-            src="/Possibilities3.png"
-            height={300}
-            width={180}
-            alt="Possibilities"
-            className="w-[45%] sm:w-[270px] h-[300px] sm:h-[450px] object-cover"
-          />
-          <Image
-            src="/Possibilities2.png"
-            height={300}
-            width={180}
-            alt="Possibilities"
-            className="w-[45%] sm:w-[270px] h-[300px] sm:h-[450px] object-cover"
-          />
-          <Image
-            src="/Possibilities1.png"
-            height={300}
-            width={180}
-            alt="Possibilities"
-            className="w-[45%] sm:w-[270px] h-[300px] sm:h-[450px] object-cover"
-          />
+          {["4", "3", "2", "1"].map((i) => (
+            <Image
+              key={i}
+              src={`/Possibilities${i}.png`}
+              height={300}
+              width={180}
+              alt="Possibilities"
+              className="w-[45%] sm:w-[270px] h-[300px] sm:h-[450px] object-cover"
+            />
+          ))}
         </div>
       </section>
 
-      <section className="bg-[#171a34]/80 text-white text-lg sm:text-2xl overflow-hidden pt-[40px] sm:pt-[80px] flex flex-col items-center">
+      {/* Logos & Focus Projects */}
+      <section className="bg-[#171a34]/80 text-white pt-[40px] sm:pt-[80px] flex flex-col items-center">
         <SectionHeading
           leadingText="10+ Iconic Real Estate Brands"
           highlightText="Under One Roof"
         />
-        <div className="relative w-full overflow-x-visible mt-[40px] sm:mt-[72px] mb-[80px] sm:mb-[144px] flex justify-center">
+        <div className="relative w-full mt-[40px] sm:mt-[72px] mb-[80px] sm:mb-[144px] flex justify-center overflow-x-visible">
           <Image
             src="/BuilderLogos.png"
             alt="BuilderLogos"
@@ -183,6 +140,8 @@ const Home = () => {
         <div className="my-[40px] sm:my-[85px] w-full px-[5%] sm:px-0">
           <FocusProjectCarousel />
         </div>
+
+        {/* Registration Form */}
         <SectionHeading
           leadingText="Don't Miss,"
           highlightText="Register Yourself."
@@ -239,102 +198,86 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        {/* Voices Section */}
         <SectionHeading
           leadingText="Voices"
           highlightText="That Matter"
           underlineLeading
         />
-        <div className="mt-[40px] sm:mt-[61px] w-full px-[5%] sm:px-[10%] flex justify-between items-center">
-          <FaRegArrowAltCircleLeft
-            size={16}
-            color="#fff"
-            className="mt-[15%] sm:mt-[15%]"
-          />
-          <div className="w-[90%] sm:w-[70%] flex relative justify-end">
+        <div className="mt-[40px] sm:mt-[61px] w-full px-[5%] sm:px-[10%] flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10">
+          {/* Left Arrow - vertically aligned */}
+          <div className="hidden sm:flex items-center">
+            <FaRegArrowAltCircleLeft size={24} color="#fff" />
+          </div>
+
+          {/* Testimonial */}
+          <div className="w-full flex flex-col sm:flex-row items-center sm:items-end max-w-[1000px]">
+            {/* CEO Image */}
             <Image
               src="/DLFCEO.png"
               alt="person"
               height={290}
               width={223}
-              className="absolute left-0 bottom-0 w-[150px] sm:w-[334px] h-[200px] sm:h-[435px] object-cover"
+              className="w-[150px] sm:w-[300px] h-[200px] sm:h-[420px] object-cover z-0"
             />
-            <div className="mt-[150px] sm:mt-[220px] w-full sm:w-[85%] pl-[30%] sm:pl-[20%] pt-[30px] sm:pt-[50px] bg-white rounded-md">
-              <p className="font-chronicle text-xl sm:text-[32px] text-[#0F0F0F] mb-[8px] sm:mb-[10px] px-4 sm:px-0">
+
+            {/* White Box */}
+            <div className="w-full sm:w-[65%] sm:ml-[-40px] mt-6 sm:mt-[180px] pt-[30px] sm:pt-[40px] bg-white rounded-md px-6 sm:px-8 shadow-md">
+              <p className="font-chronicle text-xl sm:text-[28px] text-[#0F0F0F] mb-2 pl-[5%]">
                 Mr. Vihaan Jain{" "}
                 <span className="text-xs sm:text-[15px] italic">CEO, DLF</span>
               </p>
-              <p className="font-lato italic text-sm sm:text-[18px] text-[#888888] font-light pr-[5%] sm:pr-[10%] px-4 sm:px-0">
+              <p className="font-lato italic text-sm sm:text-[16px] text-[#888888] font-light pl-[5%]">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s.
               </p>
-              <div className="flex justify-self-end mt-[20px] sm:mt-[30px] mb-[15px] sm:mb-[20px] pr-[5%]">
-                <IoIosStar size={9} color="#E2B110" />
-                <IoIosStar size={9} color="#E2B110" />
-                <IoIosStar size={9} color="#E2B110" />
-                <IoIosStar size={9} color="#E2B110" />
-                <IoIosStar size={9} color="#E2B110" />
+              <div className="flex mt-4 sm:mt-6 mb-3 justify-end">
+                {[...Array(5)].map((_, i) => (
+                  <IoIosStar key={i} size={14} color="#E2B110" />
+                ))}
               </div>
             </div>
           </div>
-          <FaRegArrowAltCircleRight
-            size={16}
-            color="#fff"
-            className="mt-[15%] sm:mt-[15%]"
-          />
+
+          {/* Right Arrow - vertically aligned */}
+          <div className="hidden sm:flex items-center">
+            <FaRegArrowAltCircleRight size={24} color="#fff" />
+          </div>
         </div>
+
         {/* Footer */}
         <footer className="w-full mt-[80px] sm:mt-[150px] bg-white py-[15px] sm:py-[20px] px-[5%] sm:px-[15%] flex flex-col sm:flex-row justify-between items-center text-[#0F0F0F] gap-4 sm:gap-0">
-          <div className="flex items-center">
-            <Image
-              src="/ColorLogo.png"
-              alt="Logo"
-              width={150}
-              height={50}
-              className="object-contain sm:w-[220px] sm:h-[80px]"
-            />
-          </div>
+          <Image
+            src="/ColorLogo.png"
+            alt="Logo"
+            width={150}
+            height={50}
+            className="object-contain sm:w-[220px] sm:h-[80px]"
+          />
           <nav className="flex flex-wrap justify-center gap-4 sm:gap-[56px] font-lato italic text-sm sm:text-[16px]">
-            <a
-              href="#about"
-              className="hover:text-[#2597EF] transition-colors duration-200"
-            >
-              About Us
-            </a>
-            <a
-              href="#event"
-              className="hover:text-[#2597EF] transition-colors duration-200"
-            >
-              Event
-            </a>
-            <a
-              href="#gallery"
-              className="hover:text-[#2597EF] transition-colors duration-200"
-            >
-              Gallery
-            </a>
-            <a
-              href="#location"
-              className="hover:text-[#2597EF] transition-colors duration-200"
-            >
-              Location
-            </a>
-            <a
-              href="#contact"
-              className="hover:text-[#2597EF] transition-colors duration-200"
-            >
-              Contact Us
-            </a>
+            {["About Us", "Event", "Gallery", "Location", "Contact Us"].map(
+              (text, i) => (
+                <a
+                  key={i}
+                  href={`#${text.toLowerCase().replace(/ /g, "")}`}
+                  className="hover:text-[#2597EF] transition-colors duration-200"
+                >
+                  {text}
+                </a>
+              )
+            )}
           </nav>
-          <div />
         </footer>
         <div className="flex flex-col sm:flex-row w-full justify-between px-[5%] sm:px-[10%] py-[8px] sm:py-[10px] items-center text-white gap-2 sm:gap-0">
           <p className="text-xs sm:text-[15px]">All copyright reserved @2025</p>
           <div className="flex w-[30%] sm:w-[7%] justify-between">
-            <FiFacebook size={16} color="#fff" className="sm:w-[20px]" />
-            <FiInstagram size={16} color="#fff" className="sm:w-[20px]" />
-            <FiLinkedin size={16} color="#fff" className="sm:w-[20px]" />
-            <FiTwitter size={16} color="#fff" className="sm:w-[20px]" />
+            {[FiFacebook, FiInstagram, FiLinkedin, FiTwitter].map(
+              (Icon, idx) => (
+                <Icon key={idx} size={16} className="sm:w-[20px]" />
+              )
+            )}
           </div>
         </div>
       </section>
