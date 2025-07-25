@@ -1,3 +1,4 @@
+import MultiStepForm from "@/components/ui/Form";
 import FocusProjectCarousel from "@/components/ui/HomeCarousel";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Timer from "@/components/ui/Timer";
@@ -79,7 +80,7 @@ const Home = () => {
             />
           </div>
 
-          <div className="relative mt-[15%] z-20 flex flex-col items-center space-y-6 mb-4 sm:mb-6 w-full">
+          <div className="relative mt-[22%] z-20 flex flex-col items-center space-y-6 mb-4 sm:mb-6 w-full">
             <button className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
               Register Now
             </button>
@@ -205,29 +206,7 @@ const Home = () => {
                 Let's Make Your <br />
                 Dream Home Reality!
               </p>
-              <form className="flex flex-col space-y-5 w-full">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
-                />
-                <input
-                  type="email"
-                  placeholder="Email ID"
-                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone No"
-                  className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
-                />
-                <button
-                  type="submit"
-                  className="w-full px-4 py-2 sm:py-2.5 bg-white text-[#171A34] font-medium rounded-md hover:opacity-90 flex justify-center items-center gap-2 text-sm sm:text-[16px] font-lato italic"
-                >
-                  Next <span className="text-base sm:text-lg">➜</span>
-                </button>
-              </form>
+              <MultiStepForm />
             </div>
           </div>
         </div>
