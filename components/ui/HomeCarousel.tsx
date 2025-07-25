@@ -42,15 +42,46 @@ const projects = [
 export default function FocusProjectCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % projects.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % projects.length);
     }, 5000);
+    // Resetting interval on manual navigation
     return () => clearInterval(interval);
-  }, []);
+  }, [currentIndex]);
 
   return (
     <div className="relative h-[360px] sm:h-[540px] w-full flex justify-center items-center overflow-x-visible px-[5%]">
+      {/* Left Arrow Button */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-2 rounded-full"
+        aria-label="Previous Project"
+      >
+        <div className="hidden sm:flex items-center">
+          <FaRegArrowAltCircleLeft size={24} color="#fff" />
+        </div>
+      </button>
+
+      {/* Right Arrow Button */}
+      <button
+        onClick={handleNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-2 rounded-full"
+        aria-label="Next Project"
+      >
+        <div className="hidden sm:flex items-center">
+          <FaRegArrowAltCircleRight size={24} color="#fff" />
+        </div>
+      </button>
+
       <div className="relative w-[120%] sm:w-[950px] h-[360px] sm:h-[540px]">
         {projects.map((project, index) => {
           const relativeIndex =
