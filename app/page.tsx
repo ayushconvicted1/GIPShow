@@ -3,7 +3,7 @@ import FocusProjectCarousel from "@/components/ui/HomeCarousel";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Timer from "@/components/ui/Timer";
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 import {
   FaRegArrowAltCircleLeft,
   FaRegArrowAltCircleRight,
@@ -206,7 +206,9 @@ const Home = () => {
                 Let's Make Your <br />
                 Dream Home Reality!
               </p>
-              <MultiStepForm />
+              <Suspense fallback={<div>Loading...</div>}>
+                <MultiStepForm />
+              </Suspense>
             </div>
           </div>
         </div>
