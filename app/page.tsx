@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { FiFacebook, FiInstagram, FiLinkedin, FiTwitter } from "react-icons/fi";
 import { IoIosStar } from "react-icons/io";
+import ScrollToFormButton from "@/components/ui/ScrollToForm";
 
 const Home = () => {
   return (
@@ -32,9 +33,9 @@ const Home = () => {
           height={45}
           className="my-[5px] w-[60px] sm:w-[80px] h-[45px] sm:h-[60px] sm:my-[7px]"
         />
-        <button className="h-full bg-gradient-to-r from-[#2597EF] to-[#A14EFF] hover:opacity-90 text-white font-medium w-[100px] xs:w-[120px] sm:w-[172px] text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">
+        <ScrollToFormButton className="h-full bg-gradient-to-r from-[#2597EF] to-[#A14EFF] hover:opacity-90 text-white font-medium w-[100px] xs:w-[120px] sm:w-[172px] text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">
           Inquire Now
-        </button>
+        </ScrollToFormButton>
       </header>
 
       {/* Hero Section */}
@@ -81,9 +82,9 @@ const Home = () => {
           </div>
 
           <div className="relative mt-[22%] z-20 flex flex-col items-center space-y-6 mb-4 sm:mb-6 w-full">
-            <button className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
+            <ScrollToFormButton className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
               Register Now
-            </button>
+            </ScrollToFormButton>
             <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] font-light text-center font-chronicle w-[90%] sm:w-auto">
               A{" "}
               <span className="font-semibold underline decoration-[#2597EF] decoration-4 underline-offset-[6px]">
@@ -98,9 +99,9 @@ const Home = () => {
         <div className="hidden sm:flex flex-grow"></div>
 
         <div className="hidden sm:block relative z-20 flex-col items-center justify-end space-y-6 mb-4 sm:mb-6">
-          <button className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
+          <ScrollToFormButton className="bg-gradient-to-r from-[#5F5AF7] to-[#AC87F7] hover:opacity-90 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-md shadow-lg">
             Register Now
-          </button>
+          </ScrollToFormButton>
           <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] font-light text-center font-chronicle w-[90%] sm:w-auto">
             A{" "}
             <span className="font-semibold underline decoration-[#2597EF] decoration-4 underline-offset-[6px]">
@@ -134,7 +135,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Rest of the content remains the same */}
       {/* Event Section */}
       <section className="bg-[#171a34]/80 text-white pt-[40px] sm:pt-[80px]">
         <SectionHeading
@@ -170,45 +170,46 @@ const Home = () => {
             className="w-full sm:w-[780px] max-w-full h-[150px] sm:h-[225px] object-contain"
           />
         </div>
-        <SectionHeading leadingText="Our" highlightText="Focus Projects" />
         <div className="my-[40px] sm:my-[85px] w-full px-[5%] sm:px-0">
           <FocusProjectCarousel />
         </div>
 
         {/* Registration Form */}
-        <SectionHeading
-          leadingText="Don't Miss,"
-          highlightText="Register Yourself."
-        />
-        <div className="pt-[40px] sm:pt-[70px] flex w-full justify-center mb-[40px] sm:mb-[70px] px-[5%] sm:px-0">
-          <div className="flex flex-col sm:flex-row w-full sm:w-[80%] items-center justify-between gap-6 sm:gap-0">
-            <div
-              className="w-full sm:w-[60%] h-[300px] sm:h-[580px] bg-[#171a34] overflow-hidden"
-              style={{
-                WebkitMaskImage:
-                  "linear-gradient(to right, black 70%, transparent 100%)",
-                maskImage:
-                  "linear-gradient(to right, black 70%, transparent 100%)",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-              }}
-            >
-              <Image
-                src="/RegistrationImage.png"
-                alt="Register"
-                width={1000}
-                height={663}
-                className="w-full h-full object-cover object-left opacity-50"
-              />
-            </div>
-            <div className="w-full sm:w-[35%] font-lato italic text-white">
-              <p className="text-left text-lg sm:text-[25px] mb-6 sm:mb-8 leading-relaxed">
-                Let's Make Your <br />
-                Dream Home Reality!
-              </p>
-              <Suspense fallback={<div>Loading...</div>}>
-                <MultiStepForm />
-              </Suspense>
+        <div id="registration-form" className="w-full">
+          <SectionHeading
+            leadingText="Don't Miss,"
+            highlightText="Register Yourself."
+          />
+          <div className="pt-[40px] sm:pt-[70px] flex w-full justify-center mb-[40px] sm:mb-[70px] px-[5%] sm:px-0">
+            <div className="flex flex-col sm:flex-row w-full sm:w-[80%] items-center justify-between gap-6 sm:gap-0">
+              <div
+                className="w-full sm:w-[60%] h-[300px] sm:h-[580px] bg-[#171a34] overflow-hidden"
+                style={{
+                  WebkitMaskImage:
+                    "linear-gradient(to right, black 70%, transparent 100%)",
+                  maskImage:
+                    "linear-gradient(to right, black 70%, transparent 100%)",
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                }}
+              >
+                <Image
+                  src="/RegistrationImage.png"
+                  alt="Register"
+                  width={1000}
+                  height={663}
+                  className="w-full h-full object-cover object-left opacity-50"
+                />
+              </div>
+              <div className="w-full sm:w-[35%] font-lato italic text-white">
+                <p className="text-left text-lg sm:text-[25px] mb-6 sm:mb-8 leading-relaxed">
+                  Let's Make Your <br />
+                  Dream Home Reality!
+                </p>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <MultiStepForm />
+                </Suspense>
+              </div>
             </div>
           </div>
         </div>
@@ -267,7 +268,9 @@ const Home = () => {
               (text, i) => (
                 <a
                   key={i}
-                  href={`#${text.toLowerCase().replace(/ /g, "")}`}
+                  href="https://bop.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-[#2597EF] transition-colors duration-200"
                 >
                   {text}
@@ -281,7 +284,14 @@ const Home = () => {
           <div className="flex w-[30%] sm:w-[7%] justify-between">
             {[FiFacebook, FiInstagram, FiLinkedin, FiTwitter].map(
               (Icon, idx) => (
-                <Icon key={idx} size={16} className="sm:w-[20px]" />
+                <a
+                  key={idx}
+                  href="https://bop.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon key={idx} size={16} className="sm:w-[20px]" />
+                </a>
               )
             )}
           </div>

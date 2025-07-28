@@ -1,5 +1,6 @@
 import { connectToDatabase } from "../../../lib/mongodb";
-import { createCalendarEvent } from "../../../lib/calendar";
+import { sendEmail } from "../../../lib/nodemailer"; // Import the email utility
+// import { createCalendarEvent } from "../../../lib/calendar"; // Keep for future use
 
 export async function POST(req) {
   try {
@@ -12,12 +13,13 @@ export async function POST(req) {
       propertyType,
       source,
       timeSlot,
-      referral,
+      referral, // This is the referralCode
     } = await req.json();
     const { db } = await connectToDatabase();
 
     // Validate referral if provided
-    let referrerId = null;
+    let referrerEmail = null;
+    let referrerName = null;
     if (referral) {
       const referralDoc = await db
         .collection("referrals")
@@ -28,7 +30,9 @@ export async function POST(req) {
           { status: 400 }
         );
       }
-      referrerId = referralDoc.userId;
+      console.log(referralDoc);
+      referrerEmail = referralDoc.email;
+      referrerName = referralDoc.name;
     }
 
     // Check if user already exists
@@ -40,7 +44,7 @@ export async function POST(req) {
       );
     }
 
-    // 2. Create the complete user object with all fields
+    // 2. Create the complete user object
     const user = {
       name,
       email,
@@ -49,27 +53,68 @@ export async function POST(req) {
       propertyType,
       source,
       timeSlot,
-      referrerId,
+      referrerEmail, // Store who referred this user
       createdAt: new Date(),
     };
 
     // Store the new user in the database
     await db.collection("users").insertOne(user);
 
-    // Create calendar event (uncomment and configure as needed)
-    // await createCalendarEvent({
-    //   email,
-    //   summary: 'Real Estate Expo Inquiry',
-    //   description: `New inquiry from ${name}. Preferred time: ${timeSlot}.`,
-    //   start: '2025-08-01T09:00:00Z', // Example date - make this dynamic
-    //   end: '2025-08-01T17:00:00Z',
-    // });
+    // --- Send Confirmation Email to the New User ---
+    const userEmailSubject = "Welcome to the GIP Show!";
+    const userEmailHtml = `
+      <h1>Hi ${name},</h1>
+      <p>Thank you for your interest in the GIP Show! Your registration is confirmed.</p>
+      <p>Here are the details you provided:</p>
+      <ul>
+        <li><strong>Name:</strong> ${name}</li>
+        <li><strong>Email:</strong> ${email}</li>
+        <li><strong>Phone:</strong> ${phone}</li>
+        <li><strong>City:</strong> ${city}</li>
+        <li><strong>Property Type:</strong> ${propertyType}</li>
+        <li><strong>Source:</strong> ${source}</li>
+        <li><strong>Preferred Time Slot:</strong> ${timeSlot}</li>
+      </ul>
+      <p>We look forward to seeing you!</p>
+      <p>Best regards,<br>The GIP Show Team</p>
+    `;
+
+    await sendEmail({
+      to: email,
+      subject: userEmailSubject,
+      html: userEmailHtml,
+    });
+    // --- End of User Email ---
+
+    // --- Send Notification Email to the Referrer ---
+    if (referrerEmail && referrerName) {
+      const referrerEmailSubject = "New Referral Signup for the GIP Show!";
+      const referrerEmailHtml = `
+        <h1>Hi ${referrerName},</h1>
+        <p>Great news! Someone has registered for the GIP Show using your referral link.</p>
+        <p><strong>New Registrant Details:</strong></p>
+        <ul>
+          <li><strong>Name:</strong> ${name}</li>
+          <li><strong>Email:</strong> ${email}</li>
+          <li><strong>City:</strong> ${city}</li>
+        </ul>
+        <p>Thank you for spreading the word!</p>
+        <p>Best regards,<br>The GIP Show Team</p>
+      `;
+
+      await sendEmail({
+        to: referrerEmail,
+        subject: referrerEmailSubject,
+        html: referrerEmailHtml,
+      });
+    }
+    // --- End of Referrer Email ---
 
     return Response.json({ success: true, message: "Registration successful" });
   } catch (err) {
     console.error(err);
     return Response.json(
-      { success: false, message: "Server error" },
+      { success: false, message: "Server error during registration." },
       { status: 500 }
     );
   }
