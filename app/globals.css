@@ -24,6 +24,53 @@ body {
   transform-origin: bottom center;
 }
 
+/* Custom styles for react-phone-number-input */
+/* Custom styles for react-phone-number-input */
+.phone-input-container {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid #a2a2a2;
+  border-radius: 0.375rem; /* rounded-md */
+  padding-left: 0.5rem; /* Give some space for the country picker */
+}
+
+/* The actual <input> field where the number is typed */
+.phone-input-container .PhoneInputInput {
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0.5rem 0.5rem;
+  color: #a2a2a2;
+  font-size: 16px;
+  font-style: italic;
+  width: 100%;
+}
+
+.phone-input-container .PhoneInputInput::placeholder {
+  color: #a2a2a2;
+}
+
+/* ✨ ACCENT COLOR UI CHANGE for the country code picker */
+.phone-input-container .PhoneInputCountry {
+  background-color: #171a34; /* This is Tailwind's blue-600. CHANGE THIS to your accent color */
+  color: white; /* Ensure text is readable on the accent background */
+  padding: 4px 8px;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+
+/* Style the small dropdown arrow within the country picker */
+.phone-input-container .PhoneInputCountrySelectArrow {
+  opacity: 0.6;
+}
+
+/* Make all dropdown <option> backgrounds black */
+select option {
+  background: #171a34;
+  color: #a2a2a2;
+}
+
 @media (max-height: 850px) {
   .people-image-wrapper img {
     transform: scale(0.88);

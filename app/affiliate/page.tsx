@@ -127,7 +127,7 @@ export default function AffiliateLinkPage() {
     );
   };
 
-  const shareText = `Check out The Great Indian Property Show with its vibrant logo! Join now: ${referralLink}`;
+  const shareText = `Check out The Great Indian Property Show! Join now: ${referralLink}`;
 
   return (
     <div className="w-full min-h-screen overflow-x-hidden bg-[#171A34]">
