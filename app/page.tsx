@@ -54,7 +54,7 @@ const Home = () => {
       />
 
       {/* Content Wrapper to lift all content above the confetti */}
-      <div className="relative z-20">
+      <div className="relative z-1">
         {/* Header */}
         <header className="fixed top-0 left-0 w-full z-[99] flex justify-between items-center pl-4 sm:pl-6 h-[60px] sm:h-[85px] text-white bg-[#fff] bg-opacity-25 backdrop-blur-md">
           <div className="flex items-center w-[100px] xs:w-[120px] sm:w-[172px]">
