@@ -36,12 +36,12 @@ const Timer = () => {
         {keys.map((label, index) => (
           <div key={label} className="flex flex-col items-center relative">
             {label === "Days" && (
-              <span className="text-white text-xs sm:text-sm mb-1 absolute left-2 sm:left-4 -top-5 sm:-top-6">
+              <span className="text-white font-lato italic text-xs sm:text-sm mb-1 absolute left-2 sm:left-4 -top-5 sm:-top-6">
                 Days
               </span>
             )}
-            <div className="flex flex-row items-center">
-              <div className="bg-[#fff] bg-opacity-20 backdrop-blur-sm w-[70px] sm:w-[80px] lg:w-[162px] h-[100px] sm:h-[140px] lg:h-[227px] text-[35px] sm:text-[50px] lg:text-[80px] font-bold flex items-center justify-center rounded-[15px] sm:rounded-[30px]">
+            <div className="flex flex-row font-agency items-center">
+              <div className="bg-[#fff] bg-opacity-20 backdrop-blur-sm w-[70px] sm:w-[80px] lg:w-[162px] h-[100px] sm:h-[140px] lg:h-[227px] text-[35px] sm:text-[60px] lg:text-[100px] font-bold flex items-center justify-center rounded-[15px] sm:rounded-[30px]">
                 {padded(timeLeft[label])}
               </div>
               {index !== keys.length - 1 && (

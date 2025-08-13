@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .underline-gold-gradient {
+    background-image: linear-gradient(to right, #fbf09c, #c6932f, #fbf09c);
+    background-repeat: no-repeat;
+    background-size: 100% 5px; /* Controls the underline thickness */
+    background-position: 0 100%; /* Positions the 'underline' at the bottom */
+  }
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -10,13 +19,6 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-@font-face {
-  font-family: "chronicle";
-  src: url("/fonts/Chronicle.otf") format("opentype");
-  font-weight: 200;
-  font-style: normal;
 }
 
 .people-image-wrapper img {

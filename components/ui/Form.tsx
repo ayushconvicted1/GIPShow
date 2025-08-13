@@ -6,8 +6,6 @@ import { IoChevronDown } from "react-icons/io5";
 
 // Import the necessary libraries and hooks
 import { useDebounce } from "@/hooks/useDebounce"; // Adjust path if needed
-import PhoneInput, { isPossiblePhoneNumber } from "react-phone-number-input";
-import "react-phone-number-input/style.css"; // Import default styles
 
 // Define a type for city suggestions
 type CitySuggestion = {
@@ -134,10 +132,6 @@ const MultiStepForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePhoneChange = (value: string | undefined) => {
-    setFormData((prev) => ({ ...prev, phone: value || "" }));
-  };
-
   const handleCitySelect = (city: CitySuggestion) => {
     const fullCityName = `${city.city}, ${city.country}`;
     setFormData((prev) => ({ ...prev, city: fullCityName }));
@@ -146,10 +140,6 @@ const MultiStepForm = () => {
   };
 
   const handleSubmit = async () => {
-    if (formData.phone && !isPossiblePhoneNumber(formData.phone)) {
-      setError("Please enter a valid phone number.");
-      return;
-    }
     setIsSubmitting(true);
     setError(null);
     try {
@@ -217,14 +207,14 @@ const MultiStepForm = () => {
             required
             className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
           />
-          <PhoneInput
+          <input
+            type="tel"
+            name="phone"
             placeholder="Phone No"
             value={formData.phone}
-            onChange={handlePhoneChange}
-            defaultCountry="IN"
-            international
-            className="phone-input-container"
+            onChange={handleChange}
             required
+            className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
           />
         </>
       )}

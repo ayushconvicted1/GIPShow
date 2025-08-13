@@ -127,7 +127,7 @@ export default function FocusProjectCarousel() {
                 <p className="text-[#777] italic font-lato text-sm sm:text-[16px]">
                   {project.content}
                 </p>
-                <button className="mt-3 sm:mt-4 px-3 sm:px-4 py-1.5 sm:py-2 rounded bg-[#7864f8] text-white text-xs sm:text-sm w-max">
+                <button className="mt-3 sm:mt-4 px-5 sm:px-6 text-[15px] font-lato italic py-1.5 sm:py-2 rounded bg-gradient-to-r from-[#236FC7] to-[#E30615] text-white text-xs sm:text-sm w-max">
                   Learn More
                 </button>
               </div>

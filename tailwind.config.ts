@@ -13,8 +13,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        chronicle: ["chronicle", "sans-serif"], // use 'custom' as utility class
+        chronicle: ["var(--font-chronicle)"],
         lato: ["var(--font-lato)"],
+        agency: ["var(--font-agency)"],
       },
       colors: {
         background: "hsl(var(--background))",
