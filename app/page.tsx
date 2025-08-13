@@ -11,6 +11,10 @@ import PropertyCarousel from "@/components/ui/PropertyCarousel";
 import { FiFacebook, FiInstagram, FiLinkedin, FiTwitter } from "react-icons/fi";
 import { IoIosStar } from "react-icons/io";
 import ScrollReveal from "@/components/ui/ScrollReveal"; // Using our perfected ScrollReveal component
+import {
+  FaRegArrowAltCircleLeft,
+  FaRegArrowAltCircleRight,
+} from "react-icons/fa";
 
 interface RenderItem {
   imgSrc: string;
@@ -56,27 +60,28 @@ const Home = () => {
         src={"/Confetti.webp"}
         quality={100}
         fill
+        objectFit="cover"
         priority
         alt="Confetti Background"
-        className="object-cover z-[1] pointer-events-none"
+        className="object-cover z-[2] pointer-events-none"
       />
       {/* Main Content Wrapper */}
-      <div className="relative z-[10]">
+      <div className="relative z-[1]">
         {/* Header */}
         <header className="fixed top-0 left-0 w-full z-[99] flex justify-between items-center pl-[20px] sm:pl-6 h-[60px] sm:h-[85px] text-white bg-[#fff] bg-opacity-25 backdrop-blur-md">
           <div className="flex items-center w-[80px] lg:w-[130px]">
-            <Image
+            {/* <Image
               src="/HamburgerIcon.svg"
               alt="Menu"
               width={24}
               height={14}
               className="w-[24px] sm:w-[40px] h-auto"
-            />
+            /> */}
           </div>
           <h3 className="font-lato text-[12px] text-center sm:text-[14px] lg:text-[22px] font-bold px-2">
             One Day. Endless Choices. Unbeatable Offers.
           </h3>
-          <ScrollToFormButton className="h-full bg-gradient-to-r from-[#2597EF] to-[#A14EFF] hover:opacity-90 text-white font-medium w-[100px] lg:w-[150px] text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 transition-opacity">
+          <ScrollToFormButton className="h-full bg-gradient-to-r from-[#FBF09C] via-[#C6932F] to-[#FBF09C] hover:opacity-90 text-[#2F2F2F] font-chronicle font-medium w-[100px] lg:w-[150px] text-md lg:text-md px-2 py-1 sm:px-4 sm:py-2 transition-opacity">
             Register Now
           </ScrollToFormButton>
         </header>
@@ -103,72 +108,41 @@ const Home = () => {
           </div>
           <div className="relative z-10 flex flex-col items-center text-center">
             {/* Timed entrance animation for content visible on load */}
-            <motion.div
-              variants={timedEntrance}
-              initial="initial"
-              animate="animate"
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <p className="text-white text-[18px] lg:text-[30px] font-light mb-4 sm:mb-8 sm:max-w-3xl leading-relaxed font-lato italic">
-                This is not just another real estate event.
+
+            <p className="text-white text-[18px] lg:text-[30px] font-light mb-4 sm:mb-8 sm:max-w-3xl leading-relaxed font-lato italic">
+              This is not just another real estate event.
+            </p>
+
+            <p className="text-white text-[32px] lg:text-[52px] font-bold mb-4 sm:mb-8 leading-tight font-chronicle">
+              This is “India’s Biggest Property Show”
+            </p>
+
+            <Image
+              src="/HeroLogo.png"
+              alt="Hero Logo"
+              width={90}
+              height={45}
+              className="w-[90px] sm:w-[120px] lg:w-[240px] h-auto mb-4 sm:mb-8"
+            />
+
+            <div className="flex items-center relative justify-between gap-2 mb-4 sm:mb-8">
+              <p className="font-agency font-bold text-[28px] sm:text-[32px] text-white mr-[10px]">
+                September
               </p>
-            </motion.div>
-            <motion.div
-              variants={timedEntrance}
-              initial="initial"
-              animate="animate"
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <p className="text-white text-[32px] lg:text-[52px] font-bold mb-4 sm:mb-8 leading-tight font-chronicle">
-                This is “India’s Biggest Property Show”
-              </p>
-            </motion.div>
-            <motion.div
-              variants={timedEntrance}
-              initial="initial"
-              animate="animate"
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
-              <Image
-                src="/HeroLogo.png"
-                alt="Hero Logo"
-                width={90}
-                height={45}
-                className="w-[90px] sm:w-[120px] lg:w-[240px] h-auto mb-4 sm:mb-8"
-              />
-            </motion.div>
-            <motion.div
-              variants={timedEntrance}
-              initial="initial"
-              animate="animate"
-              transition={{ duration: 0.5, delay: 0.8 }}
-            >
-              <div className="flex items-center relative justify-between gap-2 mb-4 sm:mb-8">
-                <p className="font-agency font-bold text-[28px] sm:text-[32px] text-white mr-[10px]">
-                  September
+              <div className="pr-[22px] pl-[10px] border-x-2 h-[60px] sm:h-[70px] flex items-center pt-[8px] justify-center relative">
+                <p className="font-agency font-bold text-[60px] sm:text-[70px] text-white">
+                  28{" "}
+                  <sup className="text-[18px] sm:text-[20px] absolute top-4 sm:top-5">
+                    th
+                  </sup>
                 </p>
-                <div className="pr-[22px] pl-[10px] border-x-2 h-[60px] sm:h-[70px] flex items-center pt-[8px] justify-center relative">
-                  <p className="font-agency font-bold text-[60px] sm:text-[70px] text-white">
-                    14{" "}
-                    <sup className="text-[18px] sm:text-[20px] absolute top-4 sm:top-5">
-                      th
-                    </sup>
-                  </p>
-                </div>
-                <div className="text-left font-lato font-[400] italic text-[16px] sm:text-[18px] text-white">
-                  <p>Radisson Blu</p>
-                  <p>Noida Sector 18</p>
-                </div>
               </div>
-            </motion.div>
-            <motion.div
-              variants={timedEntrance}
-              initial="initial"
-              animate="animate"
-              transition={{ duration: 0.5, delay: 1.0 }}
-            >
-              <Timer />
-            </motion.div>
+              <div className="text-left font-lato font-[400] italic text-[16px] sm:text-[18px] text-white">
+                The Mayfair Grand <br />
+                Sectory 134 Noida
+              </div>
+            </div>
+            <Timer />
           </div>
           <div className="relative z-10 flex flex-col items-center justify-center -translate-y-10 sm:-translate-y-12 lg:-translate-y-18">
             {/* Scroll-reveal animation for the hero people image */}
@@ -419,13 +393,9 @@ const Home = () => {
           </ScrollReveal>
           <ScrollReveal>
             <div className="w-full px-[5%] sm:px-[10%] flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 mt-8">
-              <motion.div
-                className="hidden sm:flex items-center"
-                whileHover={{ scale: 1.2 }}
-              >
-                <IoIosStar size={24} color="#fff" />
-              </motion.div>
-              <div className="w-full flex flex-col sm:flex-row items-center sm:items-end max-w-[1000px] transition-transform hover:-translate-y-2">
+              <FaRegArrowAltCircleLeft size={24} color="#fff" />
+
+              <div className="w-full flex flex-col justify-center sm:flex-row items-center sm:items-end max-w-[1000px] transition-transform">
                 <Image
                   src="/DLFCEO.png"
                   alt="person"
@@ -452,12 +422,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <motion.div
-                className="hidden sm:flex items-center"
-                whileHover={{ scale: 1.2 }}
-              >
-                <IoIosStar size={24} color="#fff" />
-              </motion.div>
+              <FaRegArrowAltCircleRight size={24} color="#fff" />
             </div>
           </ScrollReveal>
 
