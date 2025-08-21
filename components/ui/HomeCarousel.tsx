@@ -7,7 +7,6 @@ import {
   FaRegArrowAltCircleLeft,
   FaRegArrowAltCircleRight,
 } from "react-icons/fa";
-
 // Define the type for a single project object
 interface Project {
   srNo: number;

@@ -3,17 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { IoChevronDown } from "react-icons/io5";
-
 // Import the necessary libraries and hooks
 import { useDebounce } from "@/hooks/useDebounce"; // Adjust path if needed
-
 // Define a type for city suggestions
 type CitySuggestion = {
   id: number;
   city: string;
   country: string;
 };
-
 // ✨ HELPER HOOK: Detects clicks outside of a specified component.
 // This makes the city suggestion dropdown robust.
 const useClickOutside = (handler: () => void) => {
