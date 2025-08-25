@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
-import styles from "./PropertyCarousel.module.css"; // 1. Import the CSS module
+
 
 const data = [
   {
@@ -48,18 +48,15 @@ const itemVariants: any = {
 
 const PropertyCarousel = () => {
   return (
-    // 1. Outermost container NO LONGER has horizontal padding. It just provides vertical spacing.
     <div className="w-full py-16 z-[20]">
-      {/* 2. The scroll container now handles the scrolling directly. */}
-      <div className={`overflow-x-auto pb-4 ${styles.scrollbarHide}`}>
-        {/* 3. The PADDING is now applied HERE, inside the scrollable area. 
-               This ensures the first card is correctly offset from the left edge. */}
+      <div className={`overflow-x-auto pb-4 `}>
+
         <motion.div
-          className="flex gap-8 px-8 sm:px-16 md:px-24" // Padding moved here!
+          className="flex gap-8 px-8 sm:px-16 md:px-24"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }} // Trigger when 10% is visible
+          viewport={{ once: true, amount: 0.1 }}
         >
           {data.map((item, index) => (
             <motion.div

@@ -79,7 +79,7 @@ const MultiStepForm = () => {
           setSuggestions(data || []);
         } catch (err: any) {
           console.error(err);
-          setCityError(err.message); // Show error in the UI
+          setCityError(err.message); 
           setSuggestions([]);
         } finally {
           setIsCityLoading(false);
