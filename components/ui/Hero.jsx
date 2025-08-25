@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
 import Timer from "@/components/ui/Timer";
 import ScrollToFormButton from "@/components/ui/ScrollToForm";
@@ -7,7 +7,8 @@ import ScrollToFormButton from "@/components/ui/ScrollToForm";
 const MergedHeroPropertyComponent = () => {
   const { scrollYProgress } = useScroll();
 
-  // Property Festival render items data
+  const springOptions = { stiffness: 200, damping: 50 };
+
   const renderItems = [
     {
       imgSrc: "/Hand1CrImg.svg",
@@ -30,71 +31,104 @@ const MergedHeroPropertyComponent = () => {
     },
   ];
 
-  // HERO SECTION ANIMATIONS (0 to 0.5 scroll progress)
-  // Hero internal animations
-  const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.3]);
+  // HERO SECTION ANIMATIONS (NOW WITH SPRINGS)
+  const heroScaleRaw = useTransform(scrollYProgress, [0, 0.3], [1, 0.3]);
+  const heroScale = useSpring(heroScaleRaw, springOptions); // Elastic scale
   const heroOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
-  const backgroundScale = useTransform(scrollYProgress, [0, 0.3], [1.43, 1]);
+
+  const backgroundScaleRaw = useTransform(scrollYProgress, [0, 0.3], [1.43, 1]);
+  const backgroundScale = useSpring(backgroundScaleRaw, springOptions); // Elastic background scale
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.4], [0.5, 0]);
 
-  // New content animations (date and timer)
-  const newContentOpacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1]);
-  const newContentY = useTransform(scrollYProgress, [0.2, 0.3], [200, -150]);
+  const newContentOpacity = useTransform(scrollYProgress, [0.2, 0.22], [0, 1]);
+  const newContentYRaw = useTransform(
+    scrollYProgress,
+    [0.2, 0.22],
+    [200, -150]
+  );
+  const newContentY = useSpring(newContentYRaw, springOptions); // Elastic timer/date
 
-  // Building animation from bottom
-  const buildingY = useTransform(scrollYProgress, [0.25, 0.35], [600, 200]);
-  const buildingOpacity = useTransform(scrollYProgress, [0.25, 0.35], [0, 1]);
+  const buildingYRaw = useTransform(scrollYProgress, [0.25, 0.27], [600, 200]);
+  const buildingY = useSpring(buildingYRaw, springOptions); // Elastic building
+  const buildingOpacity = useTransform(scrollYProgress, [0.25, 0.27], [0, 1]);
+  const buttonY = useTransform(scrollYProgress, [0, 0.05], [0, 100]);
 
-  // Button position animation
-  const buttonY = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
-
-  // ENTIRE HERO SECTION SLIDE UP ANIMATION (0.35 to 0.5 scroll progress)
-  const heroSectionY = useTransform(scrollYProgress, [0.35, 0.5], [0, -window.innerHeight]);
+  const heroSectionYRaw = useTransform(
+    scrollYProgress,
+    [0.35, 0.5],
+    [0, -window.innerHeight]
+  );
+  const heroSectionY = useSpring(heroSectionYRaw, springOptions);
   const heroSectionOpacity = useTransform(scrollYProgress, [0.45, 0.5], [1, 0]);
 
-  // PROPERTY LOOT SECTION - Attached below hero section, follows it up
-  // Starts at bottom of screen (window.innerHeight), moves up as hero moves up
-  const lootSectionY = useTransform(scrollYProgress, [0.35, 0.5], [window.innerHeight, 0]);
-  const lootSectionOpacity = useTransform(scrollYProgress, [0.4, 0.5], [0, 1]);
+  // PROPERTY LOOT SECTION ANIMATIONS
+  const lootTextYRaw = useTransform(scrollYProgress, [0.5, 0.58], [300, -200]);
+  const lootTextY = useSpring(lootTextYRaw, springOptions);
+  const lootTextOpacity = useTransform(scrollYProgress, [0.5, 0.55], [0, 1]);
 
-  // Property Loot internal animations (start when section reaches top of screen at 50%)
-  const lootTextY = useTransform(scrollYProgress, [0.5, 0.65, 0.75], [0, -50, -400]);
-  const lootTextScale = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
-  const lootTextOpacity = useTransform(scrollYProgress, [0.5, 0.55, 0.72, 0.75], [0, 1, 1, 1]);
+  const lootImageScaleRaw = useTransform(
+    scrollYProgress,
+    [0.5, 0.7, 0.85],
+    [1, 1.2, 0.6]
+  );
+  const lootImageScale = useSpring(lootImageScaleRaw, springOptions);
+  const lootImageOpacity = useTransform(
+    scrollYProgress,
+    [0.45, 0.55, 1],
+    [0, 0.9, 0.4]
+  );
 
-  // Image scale animations - zooms in then stops at 70% size
-  const lootImageScale = useTransform(scrollYProgress, [0.5, 0.7, 1], [0.8, 2.5, 0.7]);
-  const lootImageOpacity = useTransform(scrollYProgress, [0.45, 0.55, 1], [0, 0.9, 0.4]);
+  const playButtonScale = lootImageScale;
 
-  // Play button animations - appears when section is in position
-  const playButtonScale = useTransform(scrollYProgress, [0.5, 0.7, 0.75], [1, 3, 0]);
-  const playButtonOpacity = useTransform(scrollYProgress, [0.45, 0.55, 0.75], [0, 1, 0]);
-  // Add this new animation - Property Loot section slides up to reveal Festival section
-  // Add these new animations for Property Loot section to slide up
-  const lootSectionSlideUpY = useTransform(scrollYProgress, [0.7, 0.85], [0, -window.innerHeight]);
-  const lootSectionSlideUpOpacity = useTransform(scrollYProgress, [0.75, 0.85], [1, 0]);
+  const playButtonOpacity = useTransform(
+    scrollYProgress,
+    [0.5, 0.55, 0.68, 0.75],
+    [0, 1, 1, 0]
+  );
 
-  // PROPERTY FESTIVAL SECTION ANIMATIONS (75% to 100% scroll progress)
-  // Change from [0.75, 0.9] to [0.8, 0.9]
-  const festivalSectionY = useTransform(scrollYProgress, [0.75, 0.9], [window.innerHeight, 0]);
-  // Change from [0.75, 0.85] to [0.8, 0.85] 
-  const festivalSectionOpacity = useTransform(scrollYProgress, [0.8, 0.85], [0, 1]);
+  // PROPERTY FESTIVAL SECTION ANIMATIONS
+  const festivalSectionYRaw = useTransform(
+    scrollYProgress,
+    [0.75, 0.9],
+    [window.innerHeight, 0]
+  );
+  const festivalSectionY = useSpring(festivalSectionYRaw, springOptions);
+  const festivalSectionOpacity = useTransform(
+    scrollYProgress,
+    [0.8, 0.85],
+    [0, 1]
+  );
 
-  // Individual item animations - first and third slide from sides
-  const leftItemX = useTransform(scrollYProgress, [0.85, 1], [-800, -300]);
-  const rightItemX = useTransform(scrollYProgress, [0.85, 1], [800, 300]);
+  const leftItemXRaw = useTransform(scrollYProgress, [0.85, 1], [-800, 0]);
+  const rightItemXRaw = useTransform(scrollYProgress, [0.85, 1], [800, 0]);
+  const leftItemX = useSpring(leftItemXRaw, springOptions);
+  const rightItemX = useSpring(rightItemXRaw, springOptions);
+
+  const middleItemYRaw = useTransform(scrollYProgress, [0.85, 1], [300, 0]);
+  const middleItemY = useSpring(middleItemYRaw, springOptions);
+
+  const lootContainerYRaw = useTransform(
+    scrollYProgress,
+    [0.35, 0.5, 0.7, 0.85],
+    [window.innerHeight, 0, 0, -window.innerHeight]
+  );
+  const lootContainerY = useSpring(lootContainerYRaw, springOptions);
+  const lootContainerOpacity = useTransform(
+    scrollYProgress,
+    [0.4, 0.5, 0.75, 0.85],
+    [0, 1, 1, 0]
+  );
 
   return (
     <div className="relative min-h-[100vh] overflow-hidden">
-      {/* HERO SECTION CONTAINER - Slides up as a whole */}
+      {/* HERO SECTION CONTAINER */}
       <motion.div
         className="fixed inset-0 w-full h-full z-10"
         style={{
           y: heroSectionY,
-          opacity: heroSectionOpacity
+          opacity: heroSectionOpacity,
         }}
       >
-        {/* Background Image */}
         <motion.div
           className="absolute inset-0 w-full h-full origin-center"
           style={{ scale: backgroundScale }}
@@ -102,23 +136,19 @@ const MergedHeroPropertyComponent = () => {
           <div
             className="w-full h-full bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('https://s3.ap-south-1.amazonaws.com/jkare.data/5.webp')"
+              backgroundImage:
+                "url('https://s3.ap-south-1.amazonaws.com/jkare.data/5.webp')",
             }}
           />
         </motion.div>
-
-        {/* Black Overlay */}
         <motion.div
           className="absolute inset-0 bg-black"
           style={{ opacity: overlayOpacity }}
         />
-
-        {/* Hero Content */}
         <motion.div
           className="absolute inset-0 flex flex-col items-center justify-center"
           style={{ scale: heroScale, opacity: heroOpacity }}
         >
-          {/* Hero Logo */}
           <Image
             src="/HeroLogo.png"
             alt="Hero Logo"
@@ -126,26 +156,17 @@ const MergedHeroPropertyComponent = () => {
             height={50}
             className="w-[100px] sm:w-[120px] lg:w-[280px] h-auto mb-2 sm:mb-6"
           />
-
-          {/* Hero Text */}
           <p className="text-white text-[18px] lg:text-[30px] font-light mb-2 sm:mb-4 sm:max-w-3xl leading-relaxed font-lato italic text-center px-4">
             This is not just another real estate event.
           </p>
-
           <p className="text-white text-[32px] lg:text-[52px] font-bold mb-4 sm:mb-8 leading-tight font-chronicle text-center px-4">
             This is "India's Biggest Property Show"
           </p>
         </motion.div>
-
-        {/* New Content - Date and Timer */}
         <motion.div
           className="absolute inset-0 flex flex-col items-center justify-center px-4"
-          style={{
-            opacity: newContentOpacity,
-            y: newContentY
-          }}
+          style={{ opacity: newContentOpacity, y: newContentY }}
         >
-          {/* Date Section */}
           <div className="flex items-center relative justify-between gap-2 mb-4 sm:mb-8">
             <p className="font-agency font-bold text-[28px] sm:text-[32px] text-white mr-[10px]">
               September
@@ -159,101 +180,75 @@ const MergedHeroPropertyComponent = () => {
               </p>
             </div>
             <div className="text-left font-lato font-[400] italic text-[16px] sm:text-[18px] text-white">
-              The Mayfair Grand <br />
-              Sector 134 Noida
+              The Mayfair Grand <br /> Sector 134 Noida
             </div>
           </div>
-
-          {/* Timer Component */}
           <Timer />
         </motion.div>
-
-        {/* Building Image Rising from Bottom */}
         <motion.div
           className="absolute bottom-0 left-0 w-full pointer-events-none"
-          style={{
-            y: buildingY,
-            opacity: buildingOpacity
-          }}
+          style={{ y: buildingY, opacity: buildingOpacity }}
         >
           <div
             className="w-full h-[400px] sm:h-[500px] lg:h-[1000px] bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('https://s3.ap-south-1.amazonaws.com/jkare.data/buildings-min.png')",
-              backgroundPosition: 'bottom'
+              backgroundImage:
+                "url('https://s3.ap-south-1.amazonaws.com/jkare.data/buildings-min.png')",
+              backgroundPosition: "bottom",
             }}
           />
         </motion.div>
-
-        {/* Register Button */}
         <motion.div
-          className="absolute left-[42%] mt-2"
-          style={{
-            y: buttonY,
-            top: '75%',
-          }}
+          className="absolute w-full flex flex-col items-center mt-2"
+          style={{ y: buttonY, top: "75%" }}
         >
-          <ScrollToFormButton
-            className="absolute -top-18 bg-gradient-to-r from-[#FBF09C] via-[#C6932F] to-[#FBF09C] 
-               hover:opacity-90 hover:scale-105 transition-transform text-[#2F2F2F] 
-               px-6 py-2 text-[22px] sm:px-8 sm:py-3 sm:text-[28px] 
-               font-chronicle rounded-md shadow-lg whitespace-nowrap">
+          <ScrollToFormButton className="absolute -top-18 bg-gradient-to-r from-[#FBF09C] via-[#C6932F] to-[#FBF09C] hover:opacity-90 hover:scale-105 transition-transform text-[#2F2F2F] px-6 py-2 text-[22px] sm:px-8 sm:py-3 sm:text-[28px] font-chronicle rounded-md shadow-lg whitespace-nowrap">
             Register Now
           </ScrollToFormButton>
         </motion.div>
       </motion.div>
 
-      {/* PROPERTY LOOT SECTION CONTAINER - Slides up from bottom */}
+      {/* PROPERTY LOOT SECTION CONTAINER */}
       <motion.div
         className="fixed inset-0 w-full h-full z-20"
         style={{
-          y: useTransform(scrollYProgress,
-            [0.35, 0.5, 0.7, 0.85],
-            [window.innerHeight, 0, 0, -window.innerHeight]
-          ),
-          opacity: useTransform(scrollYProgress,
-            [0.4, 0.5, 0.75, 0.85],
-            [0, 1, 1, 0]
-          )
+          y: lootContainerY,
+          opacity: lootContainerOpacity,
         }}
       >
-        {/* Property Loot Background Image Section - BOTTOM LAYER */}
         <motion.div
           className="absolute inset-0 z-1"
           style={{ opacity: lootImageOpacity }}
         >
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-            {/* Background Image */}
             <motion.div
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute w-full h-full"
               style={{ scale: lootImageScale }}
             >
               <div
-                className="w-full h-[80vh] bg-cover bg-center bg-no-repeat"
+                className="w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: "url('/Section2Top.png')",
-                  maskImage: "linear-gradient(to bottom, transparent 0%, black 60%, black 100%)",
-                  WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 60%, black 100%)"
+                  maskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 50%, black 100%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to bottom, transparent 0%, black 50%, black 100%)",
                 }}
               />
             </motion.div>
           </div>
         </motion.div>
-
-        {/* Blue Background Overlay - MIDDLE LAYER */}
         <div className="absolute inset-0 bg-[#17203d]/60 z-5"></div>
-
-        {/* Property Loot Text Section - TOP LAYER */}
-        <motion.section
-          className="absolute inset-0 text-white flex items-center justify-center px-4 z-20"
-          style={{
-            y: lootTextY,
-            opacity: lootTextOpacity,
-            scale: lootTextScale
-          }}
-        >
-          <div className="text-center relative">
-            <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] font-chronicle mt-6">
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
+          <motion.div
+            className="text-center"
+            style={{
+              y: lootTextY,
+              opacity: lootTextOpacity,
+              transform: "translateZ(0)",
+            }}
+          >
+            <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] font-chronicle">
               India's{" "}
               <span className="relative inline-block">
                 <span className="font-bold">Biggest Property Loot!</span>
@@ -267,23 +262,16 @@ const MergedHeroPropertyComponent = () => {
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full"></div>
               </span>
             </h2>
-          </div>
-        </motion.section>
-
-        {/* Play Button - TOP LAYER */}
+          </motion.div>
+        </div>
         <motion.div
           className="absolute inset-0 flex items-center justify-center z-30"
-          style={{
-            scale: playButtonScale,
-            opacity: playButtonOpacity
-          }}
+          style={{ scale: playButtonScale, opacity: playButtonOpacity }}
         >
-          <div className="w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] relative">
-            {/* Play button background circle */}
-            <div className="absolute inset-0 bg-white/20 rounded-full backdrop-blur-sm border-2 border-white/40"></div>
-            {/* Play icon */}
+          <div className="w-[70px] h-[70px] sm:w-[90px] sm:h-[90px] relative">
+            <div className="absolute inset-0 bg-white/30 rounded-full backdrop-blur-sm border-2 border-white/60"></div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-0 h-0 border-l-[16px] border-l-white border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent ml-1"></div>
+              <div className="w-0 h-0 border-l-[20px] border-l-white border-t-[14px] border-t-transparent border-b-[14px] border-b-transparent ml-2"></div>
             </div>
           </div>
         </motion.div>
@@ -291,15 +279,16 @@ const MergedHeroPropertyComponent = () => {
 
       {/* Content spacer to enable scrolling */}
       <div className="h-[500vh]" />
+
+      {/* PROPERTY FESTIVAL SECTION */}
       <motion.div
         className="fixed inset-0 w-full h-full z-25 bg-gradient-to-b from-[#1a1a2e] to-[#0f0f1e]"
         style={{
           y: festivalSectionY,
-          opacity: festivalSectionOpacity
+          opacity: festivalSectionOpacity,
         }}
       >
         <div className="h-full flex flex-col items-center justify-center px-4">
-          {/* Main Heading */}
           <div className="mt-20 mb-[10px]">
             <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle">
               This Is Not Just a Site Visit. <br />
@@ -312,16 +301,14 @@ const MergedHeroPropertyComponent = () => {
               </span>
             </h2>
           </div>
-
-          {/* Feature Items */}
-          <div className="flex flex-col sm:flex-row items-center justify-around mt-[50px] gap-10 sm:gap-4">
+          <div className="flex flex-col sm:flex-row justify-around mt-[50px] gap-8 lg:w-[70%]">
             {renderItems.map((item, index) => (
               <motion.div
                 key={index}
                 className="flex w-full max-w-[250px] items-center flex-col"
                 style={{
                   x: index === 0 ? leftItemX : index === 2 ? rightItemX : 0,
-                  // Center item (index === 1) has no y animation - stays in place
+                  y: index === 1 ? middleItemY : 0,
                 }}
               >
                 <Image
@@ -342,7 +329,6 @@ const MergedHeroPropertyComponent = () => {
           </div>
         </div>
       </motion.div>
-
     </div>
   );
 };
