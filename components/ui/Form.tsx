@@ -79,7 +79,7 @@ const MultiStepForm = () => {
           setSuggestions(data || []);
         } catch (err: any) {
           console.error(err);
-          setCityError(err.message); 
+          setCityError(err.message);
           setSuggestions([]);
         } finally {
           setIsCityLoading(false);
@@ -172,7 +172,7 @@ const MultiStepForm = () => {
 
   if (isSuccess) {
     return (
-      <div className="text-white p-4 text-center">
+      <div className="text-white text-center">
         <h2 className="text-2xl font-bold mb-2">Registration Successful!</h2>
         <p>
           Thank you for registering. A calendar invite has been sent to your
@@ -193,7 +193,7 @@ const MultiStepForm = () => {
             value={formData.fullName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
+            className="w-full px-4 py-2 rounded-md bg-transparent border border-[#fff] text-[#fff] placeholder-[#fff] text-sm sm:text-[16px] outline-none italic font-lato"
           />
           <input
             type="email"
@@ -202,7 +202,7 @@ const MultiStepForm = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
+            className="w-full px-4 py-2 rounded-md bg-transparent border border-[#fff] text-[#fff] placeholder-[#fff] text-sm sm:text-[16px] outline-none italic font-lato"
           />
           <input
             type="tel"
@@ -211,7 +211,7 @@ const MultiStepForm = () => {
             value={formData.phone}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
+            className="w-full px-4 py-2 rounded-md bg-transparent border border-[#fff] text-[#fff] placeholder-[#fff] text-sm sm:text-[16px] outline-none italic font-lato"
           />
         </>
       )}
@@ -227,10 +227,10 @@ const MultiStepForm = () => {
               onChange={(e) => setCitySearch(e.target.value)}
               required
               autoComplete="off"
-              className="w-full px-4 py-2 rounded-md bg-transparent border border-[#A2A2A2] text-[#A2A2A2] placeholder-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
+              className="w-full px-4 py-2 rounded-md bg-transparent border border-[#fff] text-[#fff] placeholder-[#fff] text-sm sm:text-[16px] outline-none italic font-lato"
             />
             {(isCityLoading || cityError || suggestions.length > 0) && (
-              <ul className="absolute z-10 w-full mt-1 bg-[#171a34] border border-[#A2A2A2] rounded-md max-h-60 overflow-y-auto text-sm">
+              <ul className="absolute z-10 w-full mt-1 bg-[#171a34] border border-[#fff] rounded-md max-h-60 overflow-y-auto text-sm">
                 {isCityLoading && (
                   <li className="px-4 py-2 text-gray-400 italic">
                     Loading cities...
@@ -258,7 +258,7 @@ const MultiStepForm = () => {
               value={formData.propertyType}
               onChange={handleChange}
               required
-              className={`w-full appearance-none px-4 py-2 pr-10 rounded-md border border-[#A2A2A2] text-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato transition-colors ${"bg-[#171a34]"}`}
+              className={`w-full appearance-none px-4 py-2 pr-10 rounded-md border border-[#fff] text-[#fff] text-sm sm:text-[16px] outline-none italic font-lato transition-colors ${"bg-[#171a34]"}`}
             >
               <option value="">Type of Property</option>
               <option value="Apartment">Apartment</option>
@@ -268,7 +268,7 @@ const MultiStepForm = () => {
               <option value="Other">Other</option>
             </select>
             <IoChevronDown
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A2A2A2] pointer-events-none"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#fff] pointer-events-none"
               size={20}
             />
           </div>
@@ -284,7 +284,7 @@ const MultiStepForm = () => {
               onChange={handleChange}
               required
               disabled={!!referrerName}
-              className="w-full appearance-none px-4 py-2 pr-10 rounded-md bg-black border border-[#A2A2A2] text-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato disabled:bg-gray-700/20 disabled:cursor-not-allowed"
+              className="w-full appearance-none px-4 py-2 pr-10 rounded-md bg-black border border-[#fff] text-[#fff] text-sm sm:text-[16px] outline-none italic font-lato disabled:bg-gray-700/20 disabled:cursor-not-allowed"
             >
               <option value="">How did you hear about us?</option>
               {referrerName && (
@@ -299,7 +299,7 @@ const MultiStepForm = () => {
               <option value="Other">Other</option>
             </select>
             <IoChevronDown
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A2A2A2] pointer-events-none"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#fff] pointer-events-none"
               size={20}
             />
           </div>
@@ -309,7 +309,7 @@ const MultiStepForm = () => {
               value={formData.timeSlot}
               onChange={handleChange}
               required
-              className="w-full appearance-none px-4 py-2 pr-10 rounded-md bg-black border border-[#A2A2A2] text-[#A2A2A2] text-sm sm:text-[16px] outline-none italic font-lato"
+              className="w-full appearance-none px-4 py-2 pr-10 rounded-md bg-black border border-[#fff] text-[#fff] text-sm sm:text-[16px] outline-none italic font-lato"
             >
               <option value="">Preferred Time</option>
               <option value="10AM - 12PM">10AM - 12PM</option>
@@ -318,7 +318,7 @@ const MultiStepForm = () => {
               <option value="4PM - 6PM">4PM - 6PM</option>
             </select>
             <IoChevronDown
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A2A2A2] pointer-events-none"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#fff] pointer-events-none"
               size={20}
             />
           </div>

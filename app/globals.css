@@ -85,6 +85,34 @@ select option {
   }
 }
 
+/* In your globals.css or main stylesheet */
+
+/* In your globals.css or main stylesheet */
+
+/* In your globals.css or main stylesheet */
+
+.gradient-border-form {
+  /* Define the border width and style. */
+  border-width: 2px;
+  border-style: solid;
+
+  /*
+   The source for the border image. We've added a color-stop in the middle.
+   - Starts at 100% opacity (top-left).
+   - Fades sharply to 10% opacity by the 50% mark (the middle of the gradient).
+   - Continues to fade to a very faint 5% opacity at the end (bottom-right).
+  */
+  border-image-source: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+
+  /* This tells the browser to treat the gradient as a single, stretchable image. */
+  border-image-slice: 1;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
