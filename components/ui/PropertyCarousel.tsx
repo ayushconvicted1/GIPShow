@@ -95,7 +95,6 @@ const PropertyCarousel = () => {
             return (
               <motion.div
                 key={index}
-                className="w-[368px] flex-shrink-0"
                 variants={itemVariants}
                 transition={{
                   type: "spring",
