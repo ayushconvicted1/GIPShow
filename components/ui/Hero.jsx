@@ -642,7 +642,7 @@ const MergedHeroPropertyComponent = () => {
                   className="pb-[10px] w-[120px] h-[120px] lg:w-[175px] lg:h-[175px]"
                 />
                 <p className="text-center font-lato text-xl leading-snug lg:text-[30px] lg:leading-[34px] italic text-white px-4 sm:px-[25%]">
-                  {item.oneText}
+                  {item.oneText}{" "}
                   <span className="font-bold">{item.twoText}</span>
                   {item?.lineBreak} {item.threeText}
                 </p>
