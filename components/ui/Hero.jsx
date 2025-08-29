@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   motion,
   useScroll,
@@ -28,18 +28,29 @@ import LogoCarousel from "./LogoCarousel";
 const MergedHeroPropertyComponent = () => {
   const [windowHeight, setWindowHeight] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const finalSectionRef = useRef < HTMLDivElement > null;
+  const [finalSectionHeight, setFinalSectionHeight] = useState(0);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const handleResize = () => {
         setWindowHeight(window.innerHeight);
         setIsMobile(window.innerWidth < 768);
+        if (finalSectionRef.current) {
+          setFinalSectionHeight(finalSectionRef.current.scrollHeight);
+        }
       };
 
       handleResize();
       window.addEventListener("resize", handleResize);
 
-      return () => window.removeEventListener("resize", handleResize);
+      // A timeout to ensure content is rendered before measuring.
+      const timer = setTimeout(handleResize, 100);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        clearTimeout(timer);
+      };
     }
   }, []);
 
@@ -85,18 +96,35 @@ const MergedHeroPropertyComponent = () => {
   const newContentY = useTransform(
     smoothScrollYProgress,
     [0.03, 0.04],
-    [200, -150]
+    [200, 0]
   );
-  const buildingY = useTransform(
+
+  const desktopBuildingY = useTransform(
     smoothScrollYProgress,
     [0.04, 0.05],
-    [600, 200]
+    [600, 350]
   );
-  const buildingOpacity = useTransform(
+  const mobileBuildingY = useTransform(
+    smoothScrollYProgress,
+    [0.03, 0.04],
+    [300, 0]
+  );
+  const buildingY = isMobile ? mobileBuildingY : desktopBuildingY;
+
+  const desktopBuildingOpacity = useTransform(
     smoothScrollYProgress,
     [0.04, 0.05],
     [0, 1]
   );
+  const mobileBuildingOpacity = useTransform(
+    smoothScrollYProgress,
+    [0.03, 0.04],
+    [0, 1]
+  );
+  const buildingOpacity = isMobile
+    ? mobileBuildingOpacity
+    : desktopBuildingOpacity;
+
   const buttonY = useTransform(smoothScrollYProgress, [0, 0.01], [0, 100]);
 
   const heroSectionTransform = useTransform(
@@ -303,10 +331,14 @@ const MergedHeroPropertyComponent = () => {
   );
 
   // Final Section (Testimonials/Footer)
+  const finalYEndPosition =
+    finalSectionHeight > windowHeight
+      ? -(finalSectionHeight - windowHeight) - 80 // ✅ FIX: Increased buffer to 80px.
+      : 0;
   const finalSectionTransform = useTransform(
     smoothScrollYProgress,
     [0.95, 1.0],
-    [windowHeight, 0]
+    [windowHeight, finalYEndPosition]
   );
   const finalSectionSpring = useSpring(
     finalSectionTransform,
@@ -440,46 +472,48 @@ const MergedHeroPropertyComponent = () => {
           className="absolute inset-0 flex flex-col items-center justify-center px-4"
           style={{ opacity: newContentOpacity, y: newContentY }}
         >
-          <div className="flex items-center justify-center relative gap-1 sm:gap-2 mb-4 sm:mb-8 w-full">
-            <p className="font-agency font-bold text-2xl sm:text-[40px] text-white mr-1 sm:mr-[10px]">
-              September
-            </p>
-            <div className="px-2 sm:pl-[10px] sm:pr-[22px] border-x-2 h-[50px] sm:h-[70px] flex items-center justify-center relative">
-              <p className="font-agency font-bold text-[45px] sm:text-[70px] text-white">
-                28
-                <sup className="text-xs sm:text-[20px] absolute top-1 sm:top-5">
-                  th
-                </sup>
+          <div>
+            <div className="flex items-center justify-center relative gap-1 sm:gap-2 mb-4 sm:mb-8 w-full">
+              <p className="font-agency font-bold text-2xl sm:text-[40px] text-white mr-1 sm:mr-[10px]">
+                September
               </p>
-            </div>
-            <div className="ml-1 sm:ml-0">
-              <div className="font-lato italic text-xs sm:text-[20px] pl-1 sm:pl-[5px] font-bold flex items-center text-white">
-                <FaRegClock size={16} color="#fff" className="mr-1 sm:mr-2" />
-                <p>10AM Onwards</p>
+              <div className="px-2 sm:pl-[10px] sm:pr-[22px] border-x-2 h-[50px] sm:h-[70px] flex items-center justify-center relative">
+                <p className="font-agency font-bold text-[45px] sm:text-[70px] text-white">
+                  28
+                  <sup className="text-xs sm:text-[20px] absolute top-1 sm:top-5">
+                    th
+                  </sup>
+                </p>
               </div>
-              <div className="font-lato italic text-xs sm:text-[20px] leading-tight mt-1 sm:mt-[5px] pl-1 sm:pl-[5px] font-bold flex items-start text-white">
-                <IoLocationOutline
-                  size={16}
-                  color="#fff"
-                  className="mr-1 sm:mr-2 flex-shrink-0 mt-0.5"
-                />
-                <div>
-                  <p>Gaur Sarovar Portico</p>
-                  <p className="font-[400] text-[10px] sm:text-[14px]">
-                    Sector 4, Greater Noida, UP
-                  </p>
+              <div className="ml-1 sm:ml-0">
+                <div className="font-lato italic text-xs sm:text-[20px] pl-1 sm:pl-[5px] font-bold flex items-center text-white">
+                  <FaRegClock size={16} color="#fff" className="mr-1 sm:mr-2" />
+                  <p>10AM Onwards</p>
+                </div>
+                <div className="font-lato italic text-xs sm:text-[20px] leading-tight mt-1 sm:mt-[5px] pl-1 sm:pl-[5px] font-bold flex items-start text-white">
+                  <IoLocationOutline
+                    size={16}
+                    color="#fff"
+                    className="mr-1 sm:mr-2 flex-shrink-0 mt-0.5"
+                  />
+                  <div>
+                    <p>Gaur Sarovar Portico</p>
+                    <p className="font-[400] text-[10px] sm:text-[14px]">
+                      Sector 4, Greater Noida, UP
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
+            <Timer />
           </div>
-          <Timer />
         </motion.div>
         <motion.div
           className="absolute bottom-0 left-0 w-full pointer-events-none"
           style={{ y: buildingY, opacity: buildingOpacity }}
         >
           <div
-            className="w-full h-[400px] sm:h-[500px] lg:h-[1000px] bg-cover bg-bottom bg-no-repeat"
+            className="w-full h-[250px] sm:h-[500px] lg:h-[1000px] bg-cover bg-bottom bg-no-repeat"
             style={{
               backgroundImage: "url('/BuildingsBG.webp')",
             }}
@@ -487,7 +521,7 @@ const MergedHeroPropertyComponent = () => {
         </motion.div>
         <motion.div
           className="absolute w-full flex flex-col items-center mt-2"
-          style={{ y: buttonY, top: "75%" }}
+          style={{ y: buttonY, top: isMobile ? "80%" : "75%" }}
         >
           <ScrollToFormButton className="absolute -top-18 bg-gradient-to-r from-[#FBF09C] via-[#C6932F] to-[#FBF09C] hover:opacity-90 hover:scale-105 transition-transform text-[#2F2F2F] px-6 py-2 text-xl sm:px-8 sm:py-3 sm:text-[28px] font-chronicle rounded-md shadow-lg whitespace-nowrap">
             Register Now
@@ -578,7 +612,7 @@ const MergedHeroPropertyComponent = () => {
       >
         <div className="h-full flex flex-col items-center justify-center px-4">
           <div className="mt-20 mb-12">
-            <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] text-center font-chronicle">
+            <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] leading-[55px] text-center font-chronicle">
               This Is Not Just a Site Visit. <br />
               <span className="text-[28px] sm:text-[45px]">
                 This is a{" "}
@@ -816,12 +850,16 @@ const MergedHeroPropertyComponent = () => {
             </p>
             <p className="flex items-center font-lato italic text-lg text-white font-[700] gap-2 mb-4 lg:pl-[5px]">
               <FaRegClock
-                size={24}
-                className="md:size-[35px] flex-shrink-0"
+                size={40}
+                className="flex-shrink- mr-[5px]"
                 color="#fff"
               />
               <span>10AM Onwards</span>
             </p>
+            <div className="text-white text-[40px] lg:text-[50px] leading-[60px] font-chronicle">
+              <p>The Gaurs</p>
+              <p className="text-[70px] lg:text-[80px]">Sarovar Premiere</p>
+            </div>
           </div>
           <div className="lg:w-[50%] flex flex-col items-center justify-between">
             <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] text-center font-chronicle mt-6 px-4">
@@ -850,16 +888,17 @@ const MergedHeroPropertyComponent = () => {
 
       {/* FINAL SECTION (TESTIMONIALS & FOOTER) */}
       <motion.div
-        className="fixed inset-0 h-full w-full z-80 bg-[#171A34]"
+        className="fixed inset-0 w-full z-80 bg-[#171A34]"
         style={{
           y: finalSectionY,
           opacity: finalSectionOpacity,
           willChange: "transform, opacity",
         }}
       >
-        {/* ✅ FIX: Added overflow-y-auto to allow scrolling on small screens and adjusted padding/flex for better layout. */}
-        <div className="h-full w-full flex flex-col p-4 overflow-y-auto pt-20 sm:pt-4">
-          {/* ✅ FIX: Removed flex-grow and justify-center to allow natural stacking in a scrollable view. */}
+        <motion.div
+          ref={finalSectionRef}
+          className="w-full flex flex-col justify-between min-h-screen p-4 pt-20 sm:pt-4"
+        >
           <div className="w-full flex flex-col items-center justify-start max-w-7xl mx-auto mb-10">
             <ScrollReveal>
               <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] text-center font-chronicle px-4">
@@ -923,62 +962,63 @@ const MergedHeroPropertyComponent = () => {
               </div>
             </ScrollReveal>
           </div>
-          {/* ✅ FIX: Removed mt-auto as it's no longer needed in a scrolling layout. */}
-          <footer className="relative w-full">
-            <Image
-              src="/FooterBG.png"
-              alt="Footer Background"
-              layout="fill"
-              objectFit="cover"
-              className="z-0"
-              quality={70}
-            />
-            <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center w-full px-[5%] py-6 sm:px-[10%] sm:py-8 gap-6">
+          <div>
+            <footer className="relative w-full">
               <Image
-                src="/HeroLogo.png"
-                alt="Logo"
-                width={250}
-                height={125}
-                className="object-contain w-[150px] sm:w-[250px]"
+                src="/FooterBG.png"
+                alt="Footer Background"
+                layout="fill"
+                objectFit="cover"
+                className="z-0"
+                quality={70}
               />
-              <nav className="flex flex-wrap justify-center sm:justify-between grow gap-x-6 sm:gap-x-14 font-lato italic text-base lg:pr-[10%] lg:pl-[5%] text-white ">
-                {["Event", "Gallery", "Location", "Contact Us"].map(
-                  (text, i) => (
-                    <a
-                      key={i}
-                      href="#"
-                      className="hover:underline transition-colors text-lg"
-                    >
-                      {text}
-                    </a>
-                  )
-                )}
-              </nav>
-            </div>
-          </footer>
-          <div className="relative z-10 w-full px-[5%] sm:px-[10%]">
-            <div className="flex flex-col-reverse sm:flex-row w-full justify-between items-center text-white text-sm gap-4 py-4">
-              <p className="mt-4 sm:mt-0 text-center text-xs sm:text-sm">
-                All copyright reserved @2025
-              </p>
-              <div className="flex gap-x-5">
-                {[FiFacebook, FiInstagram, FiLinkedin, FiTwitter].map(
-                  (Icon, idx) => (
-                    <a
-                      key={idx}
-                      href="https://bop.in"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:opacity-80 transition-opacity"
-                    >
-                      <Icon size={20} />
-                    </a>
-                  )
-                )}
+              <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center w-full px-[5%] py-6 sm:px-[10%] sm:py-8 gap-6">
+                <Image
+                  src="/HeroLogo.png"
+                  alt="Logo"
+                  width={250}
+                  height={125}
+                  className="object-contain w-[150px] sm:w-[250px]"
+                />
+                <nav className="flex flex-wrap justify-center sm:justify-between grow gap-x-6 sm:gap-x-14 font-lato italic text-base lg:pr-[10%] lg:pl-[5%] text-white ">
+                  {["Event", "Gallery", "Location", "Contact Us"].map(
+                    (text, i) => (
+                      <a
+                        key={i}
+                        href="#"
+                        className="hover:underline transition-colors text-lg"
+                      >
+                        {text}
+                      </a>
+                    )
+                  )}
+                </nav>
+              </div>
+            </footer>
+            <div className="relative z-10 w-full px-[5%] sm:px-[10%]">
+              <div className="flex flex-col-reverse sm:flex-row w-full justify-between items-center text-white text-sm gap-4 py-4">
+                <p className="mt-4 sm:mt-0 text-center text-xs sm:text-sm">
+                  All copyright reserved @2025
+                </p>
+                <div className="flex gap-x-5">
+                  {[FiFacebook, FiInstagram, FiLinkedin, FiTwitter].map(
+                    (Icon, idx) => (
+                      <a
+                        key={idx}
+                        href="https://bop.in"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:opacity-80 transition-opacity"
+                      >
+                        <Icon size={20} />
+                      </a>
+                    )
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
