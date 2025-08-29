@@ -27,10 +27,19 @@ import LogoCarousel from "./LogoCarousel";
 
 const MergedHeroPropertyComponent = () => {
   const [windowHeight, setWindowHeight] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setWindowHeight(window.innerHeight);
+      const handleResize = () => {
+        setWindowHeight(window.innerHeight);
+        setIsMobile(window.innerWidth < 768);
+      };
+
+      handleResize();
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
     }
   }, []);
 
@@ -90,11 +99,17 @@ const MergedHeroPropertyComponent = () => {
   );
   const buttonY = useTransform(smoothScrollYProgress, [0, 0.01], [0, 100]);
 
-  // Hero Exit
-  const heroSectionY = useSpring(
-    useTransform(smoothScrollYProgress, [0.08, 0.13], [0, -windowHeight]),
+  const heroSectionTransform = useTransform(
+    smoothScrollYProgress,
+    [0.08, 0.13],
+    [0, -windowHeight]
+  );
+  const heroSectionSpring = useSpring(
+    heroSectionTransform,
     sectionSpringConfig
   );
+  const heroSectionY = isMobile ? heroSectionTransform : heroSectionSpring;
+
   const heroSectionOpacity = useTransform(
     smoothScrollYProgress,
     [0.08, 0.13],
@@ -128,14 +143,20 @@ const MergedHeroPropertyComponent = () => {
     [0.15, 0.18, 0.22, 0.25],
     [0, 1, 1, 0]
   );
-  const lootContainerY = useSpring(
-    useTransform(
-      smoothScrollYProgress,
-      [0.1, 0.15, 0.23, 0.28],
-      [windowHeight, 0, 0, -windowHeight]
-    ),
+
+  const lootContainerTransform = useTransform(
+    smoothScrollYProgress,
+    [0.1, 0.15, 0.23, 0.28],
+    [windowHeight, 0, 0, -windowHeight]
+  );
+  const lootContainerSpring = useSpring(
+    lootContainerTransform,
     sectionSpringConfig
   );
+  const lootContainerY = isMobile
+    ? lootContainerTransform
+    : lootContainerSpring;
+
   const lootContainerOpacity = useTransform(
     smoothScrollYProgress,
     [0.1, 0.15, 0.23, 0.28],
@@ -143,14 +164,19 @@ const MergedHeroPropertyComponent = () => {
   );
 
   // Property Festival Section (Section 2)
-  const festivalSectionY = useSpring(
-    useTransform(
-      smoothScrollYProgress,
-      [0.25, 0.3, 0.38, 0.43],
-      [windowHeight, 0, 0, -windowHeight]
-    ),
+  const festivalSectionTransform = useTransform(
+    smoothScrollYProgress,
+    [0.25, 0.3, 0.38, 0.43],
+    [windowHeight, 0, 0, -windowHeight]
+  );
+  const festivalSectionSpring = useSpring(
+    festivalSectionTransform,
     sectionSpringConfig
   );
+  const festivalSectionY = isMobile
+    ? festivalSectionTransform
+    : festivalSectionSpring;
+
   const festivalSectionOpacity = useTransform(
     smoothScrollYProgress,
     [0.25, 0.3, 0.38, 0.43],
@@ -171,14 +197,14 @@ const MergedHeroPropertyComponent = () => {
   );
 
   // Property Carousel (Section 3)
-  const section1Y = useSpring(
-    useTransform(
-      smoothScrollYProgress,
-      [0.4, 0.45, 0.53, 0.58],
-      [windowHeight, 0, 0, -windowHeight]
-    ),
-    sectionSpringConfig
+  const section1Transform = useTransform(
+    smoothScrollYProgress,
+    [0.4, 0.45, 0.53, 0.58],
+    [windowHeight, 0, 0, -windowHeight]
   );
+  const section1Spring = useSpring(section1Transform, sectionSpringConfig);
+  const section1Y = isMobile ? section1Transform : section1Spring;
+
   const section1Opacity = useTransform(
     smoothScrollYProgress,
     [0.4, 0.45, 0.53, 0.58],
@@ -186,14 +212,14 @@ const MergedHeroPropertyComponent = () => {
   );
 
   // Developers Section (Section 4)
-  const section2Y = useSpring(
-    useTransform(
-      smoothScrollYProgress,
-      [0.55, 0.6, 0.68, 0.73],
-      [windowHeight, 0, 0, -windowHeight]
-    ),
-    sectionSpringConfig
+  const section2Transform = useTransform(
+    smoothScrollYProgress,
+    [0.55, 0.6, 0.68, 0.73],
+    [windowHeight, 0, 0, -windowHeight]
   );
+  const section2Spring = useSpring(section2Transform, sectionSpringConfig);
+  const section2Y = isMobile ? section2Transform : section2Spring;
+
   const section2Opacity = useTransform(
     smoothScrollYProgress,
     [0.55, 0.6, 0.68, 0.73],
@@ -206,14 +232,14 @@ const MergedHeroPropertyComponent = () => {
   );
 
   // Focus Projects Section (Section 5)
-  const section3Y = useSpring(
-    useTransform(
-      smoothScrollYProgress,
-      [0.7, 0.75, 0.83, 0.88],
-      [windowHeight, 0, 0, -windowHeight]
-    ),
-    sectionSpringConfig
+  const section3Transform = useTransform(
+    smoothScrollYProgress,
+    [0.7, 0.75, 0.83, 0.88],
+    [windowHeight, 0, 0, -windowHeight]
   );
+  const section3Spring = useSpring(section3Transform, sectionSpringConfig);
+  const section3Y = isMobile ? section3Transform : section3Spring;
+
   const section3Opacity = useTransform(
     smoothScrollYProgress,
     [0.7, 0.75, 0.83, 0.88],
@@ -262,14 +288,14 @@ const MergedHeroPropertyComponent = () => {
   );
 
   // Form Section (Section 6)
-  const section4Y = useSpring(
-    useTransform(
-      smoothScrollYProgress,
-      [0.85, 0.9, 0.94, 0.98],
-      [windowHeight, 0, 0, -windowHeight]
-    ),
-    sectionSpringConfig
+  const section4Transform = useTransform(
+    smoothScrollYProgress,
+    [0.85, 0.9, 0.94, 0.98],
+    [windowHeight, 0, 0, -windowHeight]
   );
+  const section4Spring = useSpring(section4Transform, sectionSpringConfig);
+  const section4Y = isMobile ? section4Transform : section4Spring;
+
   const section4Opacity = useTransform(
     smoothScrollYProgress,
     [0.85, 0.9, 0.94, 0.98],
@@ -277,10 +303,17 @@ const MergedHeroPropertyComponent = () => {
   );
 
   // Final Section (Testimonials/Footer)
-  const finalSectionY = useSpring(
-    useTransform(smoothScrollYProgress, [0.95, 1.0], [windowHeight, 0]),
+  const finalSectionTransform = useTransform(
+    smoothScrollYProgress,
+    [0.95, 1.0],
+    [windowHeight, 0]
+  );
+  const finalSectionSpring = useSpring(
+    finalSectionTransform,
     sectionSpringConfig
   );
+  const finalSectionY = isMobile ? finalSectionTransform : finalSectionSpring;
+
   const finalSectionOpacity = useTransform(
     smoothScrollYProgress,
     [0.95, 1.0],
@@ -407,7 +440,6 @@ const MergedHeroPropertyComponent = () => {
           className="absolute inset-0 flex flex-col items-center justify-center px-4"
           style={{ opacity: newContentOpacity, y: newContentY }}
         >
-          {/* ✅ RESPONSIVE FIX V2: Reverted to a horizontal layout on mobile and scaled everything down for a more cohesive design. */}
           <div className="flex items-center justify-center relative gap-1 sm:gap-2 mb-4 sm:mb-8 w-full">
             <p className="font-agency font-bold text-2xl sm:text-[40px] text-white mr-1 sm:mr-[10px]">
               September
@@ -814,7 +846,7 @@ const MergedHeroPropertyComponent = () => {
       </motion.div>
 
       {/* SPACER DIV */}
-      <div className="h-[1000vh]" />
+      <div className="h-[1200vh]" />
 
       {/* FINAL SECTION (TESTIMONIALS & FOOTER) */}
       <motion.div
@@ -825,8 +857,10 @@ const MergedHeroPropertyComponent = () => {
           willChange: "transform, opacity",
         }}
       >
-        <div className="h-full w-full flex flex-col p-4">
-          <div className="flex-grow w-full flex flex-col items-center justify-center max-w-7xl mx-auto">
+        {/* ✅ FIX: Added overflow-y-auto to allow scrolling on small screens and adjusted padding/flex for better layout. */}
+        <div className="h-full w-full flex flex-col p-4 overflow-y-auto pt-20 sm:pt-4">
+          {/* ✅ FIX: Removed flex-grow and justify-center to allow natural stacking in a scrollable view. */}
+          <div className="w-full flex flex-col items-center justify-start max-w-7xl mx-auto mb-10">
             <ScrollReveal>
               <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] text-center font-chronicle px-4">
                 <span className="underline-gold-gradient font-bold">
@@ -889,7 +923,8 @@ const MergedHeroPropertyComponent = () => {
               </div>
             </ScrollReveal>
           </div>
-          <footer className="relative w-full mt-auto">
+          {/* ✅ FIX: Removed mt-auto as it's no longer needed in a scrolling layout. */}
+          <footer className="relative w-full">
             <Image
               src="/FooterBG.png"
               alt="Footer Background"
