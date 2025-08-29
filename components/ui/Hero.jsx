@@ -396,10 +396,10 @@ const MergedHeroPropertyComponent = () => {
             height={140}
             className="w-[100px] sm:w-[120px] lg:w-[280px] h-auto mb-2 sm:mb-6"
           />
-          <p className="text-white text-[18px] lg:text-[30px] font-light lg:mb-2 mb-6 sm:max-w-3xl leading-relaxed font-lato italic text-center px-4">
+          <p className="text-white text-base lg:text-[30px] font-light mb-4 sm:mb-6 lg:mb-2 leading-relaxed font-lato italic text-center px-4">
             This is not just another real estate event.
           </p>
-          <p className="text-white text-[32px] lg:text-[52px] font-bold mb-4 sm:mb-8 leading-tight font-chronicle text-center px-4">
+          <p className="text-white text-[28px] sm:text-[32px] lg:text-[52px] font-bold mb-4 sm:mb-8 leading-tight font-chronicle text-center px-4">
             This is "India's Biggest Property Show"
           </p>
         </motion.div>
@@ -407,20 +407,37 @@ const MergedHeroPropertyComponent = () => {
           className="absolute inset-0 flex flex-col items-center justify-center px-4"
           style={{ opacity: newContentOpacity, y: newContentY }}
         >
-          <div className="flex items-center relative justify-between gap-2 mb-4 sm:mb-8">
-            <p className="font-agency font-bold text-[28px] sm:text-[32px] text-white mr-[10px]">
+          {/* ✅ RESPONSIVE FIX V2: Reverted to a horizontal layout on mobile and scaled everything down for a more cohesive design. */}
+          <div className="flex items-center justify-center relative gap-1 sm:gap-2 mb-4 sm:mb-8 w-full">
+            <p className="font-agency font-bold text-2xl sm:text-[40px] text-white mr-1 sm:mr-[10px]">
               September
             </p>
-            <div className="pr-[22px] pl-[10px] border-x-2 h-[60px] sm:h-[70px] flex items-center pt-[8px] justify-center relative">
-              <p className="font-agency font-bold text-[60px] sm:text-[70px] text-white">
-                28{" "}
-                <sup className="text-[18px] sm:text-[20px] absolute top-4 sm:top-5">
+            <div className="px-2 sm:pl-[10px] sm:pr-[22px] border-x-2 h-[50px] sm:h-[70px] flex items-center justify-center relative">
+              <p className="font-agency font-bold text-[45px] sm:text-[70px] text-white">
+                28
+                <sup className="text-xs sm:text-[20px] absolute top-1 sm:top-5">
                   th
                 </sup>
               </p>
             </div>
-            <div className="text-left font-lato font-[400] italic text-[16px] sm:text-[18px] text-white">
-              The Mayfair Grand <br /> Sector 134 Noida
+            <div className="ml-1 sm:ml-0">
+              <div className="font-lato italic text-xs sm:text-[20px] pl-1 sm:pl-[5px] font-bold flex items-center text-white">
+                <FaRegClock size={16} color="#fff" className="mr-1 sm:mr-2" />
+                <p>10AM Onwards</p>
+              </div>
+              <div className="font-lato italic text-xs sm:text-[20px] leading-tight mt-1 sm:mt-[5px] pl-1 sm:pl-[5px] font-bold flex items-start text-white">
+                <IoLocationOutline
+                  size={16}
+                  color="#fff"
+                  className="mr-1 sm:mr-2 flex-shrink-0 mt-0.5"
+                />
+                <div>
+                  <p>Gaur Sarovar Portico</p>
+                  <p className="font-[400] text-[10px] sm:text-[14px]">
+                    Sector 4, Greater Noida, UP
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <Timer />
@@ -440,7 +457,7 @@ const MergedHeroPropertyComponent = () => {
           className="absolute w-full flex flex-col items-center mt-2"
           style={{ y: buttonY, top: "75%" }}
         >
-          <ScrollToFormButton className="absolute -top-18 bg-gradient-to-r from-[#FBF09C] via-[#C6932F] to-[#FBF09C] hover:opacity-90 hover:scale-105 transition-transform text-[#2F2F2F] px-6 py-2 text-[22px] sm:px-8 sm:py-3 sm:text-[28px] font-chronicle rounded-md shadow-lg whitespace-nowrap">
+          <ScrollToFormButton className="absolute -top-18 bg-gradient-to-r from-[#FBF09C] via-[#C6932F] to-[#FBF09C] hover:opacity-90 hover:scale-105 transition-transform text-[#2F2F2F] px-6 py-2 text-xl sm:px-8 sm:py-3 sm:text-[28px] font-chronicle rounded-md shadow-lg whitespace-nowrap">
             Register Now
           </ScrollToFormButton>
         </motion.div>
@@ -476,7 +493,7 @@ const MergedHeroPropertyComponent = () => {
           </div>
         </motion.div>
         <div className="absolute inset-0 bg-[#171A34]/60 z-10"></div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none px-4">
           <motion.div
             className="text-center"
             style={{
@@ -485,14 +502,14 @@ const MergedHeroPropertyComponent = () => {
               willChange: "transform, opacity",
             }}
           >
-            <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] font-chronicle">
+            <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] font-chronicle">
               India's{" "}
               <span className="relative inline-block">
                 <span className="font-bold">Biggest Property Loot!</span>
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full"></div>
               </span>
             </h2>
-            <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] font-chronicle">
+            <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] font-chronicle">
               Only on{" "}
               <span className="relative inline-block">
                 <span className="font-bold">28th September!</span>
@@ -528,10 +545,10 @@ const MergedHeroPropertyComponent = () => {
         }}
       >
         <div className="h-full flex flex-col items-center justify-center px-4">
-          <div className="mt-20 mb-[50px]">
-            <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle">
+          <div className="mt-20 mb-12">
+            <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] text-center font-chronicle">
               This Is Not Just a Site Visit. <br />
-              <span className="text-[30px] sm:text-[45px]">
+              <span className="text-[28px] sm:text-[45px]">
                 This is a{" "}
                 <span className="relative inline-block font-bold">
                   Property Festival.
@@ -540,7 +557,7 @@ const MergedHeroPropertyComponent = () => {
               </span>
             </h2>
           </div>
-          <div className="flex flex-col sm:flex-row justify-center mt-[50px] gap-8 lg:w-[70%]">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center mt-12 gap-8 lg:w-[70%]">
             {renderItems.map((item, index) => (
               <motion.div
                 key={index}
@@ -558,7 +575,7 @@ const MergedHeroPropertyComponent = () => {
                   alt="Feature Icon"
                   className="pb-[10px] w-[120px] h-[120px] lg:w-[175px] lg:h-[175px]"
                 />
-                <p className="text-center font-lato text-[20px] leading-[26px] lg:text-[30px] lg:leading-[34px] italic text-white px-[25%]">
+                <p className="text-center font-lato text-xl leading-snug lg:text-[30px] lg:leading-[34px] italic text-white px-4 sm:px-[25%]">
                   {item.oneText}
                   <span className="font-bold">{item.twoText}</span>
                   {item?.lineBreak} {item.threeText}
@@ -583,7 +600,7 @@ const MergedHeroPropertyComponent = () => {
 
       {/* DEVELOPERS SECTION */}
       <motion.div
-        className="fixed inset-0 h-full z-50 bg-[#171A34] pt-[70px]"
+        className="fixed inset-0 h-full z-50 bg-[#171A34] pt-16 sm:pt-[70px]"
         style={{
           y: section2Y,
           opacity: section2Opacity,
@@ -593,7 +610,7 @@ const MergedHeroPropertyComponent = () => {
         <div className="w-full h-full relative">
           <motion.div style={{ y: section2ContentY, willChange: "transform" }}>
             <ScrollReveal>
-              <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle mt-10">
+              <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] text-center font-chronicle mt-10">
                 <span className="underline-gold-gradient font-bold">
                   Developers
                 </span>{" "}
@@ -607,7 +624,7 @@ const MergedHeroPropertyComponent = () => {
               </h2>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="relative w-full mt-[40px] sm:mt-[72px] mb-[80px] sm:mb-[144px]">
+              <div className="relative w-full mt-10 sm:mt-[72px] mb-20 sm:mb-[144px]">
                 <Image
                   src="/LogosBG.png"
                   alt="Logos Background"
@@ -619,7 +636,7 @@ const MergedHeroPropertyComponent = () => {
               </div>
             </ScrollReveal>
             <ScrollReveal>
-              <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle mt-6">
+              <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] text-center font-chronicle mt-6">
                 One Event.{" "}
                 <span className="underline-gold-gradient font-bold">
                   Unlimited Possibilities.
@@ -641,9 +658,9 @@ const MergedHeroPropertyComponent = () => {
           willChange: "transform, opacity",
         }}
       >
-        <div className="w-full relative flex flex-col pt-[70px] items-center">
+        <div className="w-full relative flex flex-col pt-16 sm:pt-[70px] items-center">
           <motion.div
-            className="text-center text-white p-8 flex flex-col items-center w-full"
+            className="text-center text-white p-4 sm:p-8 flex flex-col items-center w-full"
             style={{ y: section3ContentY, willChange: "transform" }}
           >
             <ScrollReveal>
@@ -694,7 +711,7 @@ const MergedHeroPropertyComponent = () => {
                 />
               </motion.div>
             </div>
-            <div className="flex flex-col lg:flex-row justify-center items-center gap-8 mt-12 w-full max-w-screen-xl px-4">
+            <div className="flex flex-col lg:flex-row justify-center items-center gap-8 mt-8 lg:mt-12 w-full max-w-screen-xl px-4">
               <motion.div
                 className="w-full lg:w-1/2 flex justify-center lg:justify-end"
                 style={{
@@ -751,10 +768,10 @@ const MergedHeroPropertyComponent = () => {
       >
         <div
           id="registration-form"
-          className="w-full h-full bg-[url(/FormBG.png)] bg-cover bg-center flex justify-between flex-col lg:flex-row p-4 pt-[100px] sm:pt-[140px] lg:px-[8%]"
+          className="w-full h-full bg-[url(/FormBG.png)] bg-cover bg-center flex justify-between flex-col lg:flex-row p-4 pt-20 sm:pt-[140px] lg:px-[8%]"
         >
           <div className="lg:w-[50%]">
-            <p className="flex items-center font-lato text-[16px] md:text-[18px] lg:max-w-[70%] text-white font-[700] gap-2 mb-5">
+            <p className="flex items-center font-lato text-base md:text-[18px] lg:max-w-[70%] text-white font-[700] gap-2 mb-5">
               <IoLocationOutline
                 size={40}
                 className="md:size-[60px] flex-shrink-0"
@@ -765,7 +782,7 @@ const MergedHeroPropertyComponent = () => {
                 Sector 4, Greater Noida
               </span>
             </p>
-            <p className="flex items-center font-lato italic text-[18px] text-white font-[700] gap-2 mb-4 lg:pl-[5px]">
+            <p className="flex items-center font-lato italic text-lg text-white font-[700] gap-2 mb-4 lg:pl-[5px]">
               <FaRegClock
                 size={24}
                 className="md:size-[35px] flex-shrink-0"
@@ -782,7 +799,7 @@ const MergedHeroPropertyComponent = () => {
               </span>{" "}
               Yourself.
             </h2>
-            <div className="w-full max-w-md mx-auto lg:max-w-[60%] bg-white/15 backdrop-blur-sm p-[5%] font-lato italic text-white z-20 rounded-md">
+            <div className="w-full max-w-md mx-auto lg:max-w-[60%] bg-white/15 backdrop-blur-sm p-4 sm:p-[5%] font-lato italic text-white z-20 rounded-md">
               <div>
                 <p className="text-left text-lg sm:text-[26px] mb-6 sm:mb-8 leading-relaxed">
                   Let's Make Your <br />
@@ -819,14 +836,14 @@ const MergedHeroPropertyComponent = () => {
               </h2>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="w-full px-[5%] sm:px-[10%] flex flex-row items-center justify-center gap-6 sm:gap-10 mt-8">
+              <div className="w-full px-2 sm:px-[10%] flex flex-row items-center justify-center gap-2 sm:gap-10 mt-8">
                 <FaRegArrowAltCircleLeft
                   size={24}
                   color="#fff"
                   className="cursor-pointer flex-shrink-0"
                   onClick={prevTestimonial}
                 />
-                <div className="w-full flex flex-col sm:flex-row items-center justify-center sm:items-end max-w-[1000px] transition-transform relative overflow-hidden h-[320px] sm:h-[290px]">
+                <div className="w-full flex items-center justify-center transition-transform relative overflow-hidden min-h-[420px] sm:min-h-0 sm:h-[290px]">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentTestimonial}
@@ -844,8 +861,8 @@ const MergedHeroPropertyComponent = () => {
                         className="w-[150px] sm:w-[223px] h-auto object-cover z-10"
                         quality={75}
                       />
-                      <div className="w-full sm:w-[65%] sm:ml-[-40px] mt-[-50px] sm:mt-0 pt-[60px] sm:pt-[40px] bg-white rounded-md px-6 sm:px-8 shadow-md z-0 pb-4">
-                        <p className="font-chronicle text-xl sm:text-[28px] text-[#0F0F0F] mb-2 pl-[5%]">
+                      <div className="w-full sm:w-[65%] sm:ml-[-40px] mt-[-50px] sm:mt-0 pt-[60px] sm:pt-[40px] bg-white rounded-md px-4 py-4 sm:px-8 shadow-md z-0">
+                        <p className="font-chronicle text-lg sm:text-[28px] text-[#0F0F0F] mb-2 pl-[5%]">
                           {testimonials[currentTestimonial].name}{" "}
                           <span className="text-xs sm:text-[15px] italic">
                             {testimonials[currentTestimonial].title}
@@ -889,13 +906,13 @@ const MergedHeroPropertyComponent = () => {
                 height={125}
                 className="object-contain w-[150px] sm:w-[250px]"
               />
-              <nav className="flex flex-wrap justify-between grow gap-x-6 sm:gap-x-14 font-lato italic text-base lg:pr-[10%] lg:pl-[5%] text-white ">
+              <nav className="flex flex-wrap justify-center sm:justify-between grow gap-x-6 sm:gap-x-14 font-lato italic text-base lg:pr-[10%] lg:pl-[5%] text-white ">
                 {["Event", "Gallery", "Location", "Contact Us"].map(
                   (text, i) => (
                     <a
                       key={i}
                       href="#"
-                      className="hover:underline transition-colors text-[18px]"
+                      className="hover:underline transition-colors text-lg"
                     >
                       {text}
                     </a>
@@ -906,7 +923,7 @@ const MergedHeroPropertyComponent = () => {
           </footer>
           <div className="relative z-10 w-full px-[5%] sm:px-[10%]">
             <div className="flex flex-col-reverse sm:flex-row w-full justify-between items-center text-white text-sm gap-4 py-4">
-              <p className="mt-4 sm:mt-0 text-center">
+              <p className="mt-4 sm:mt-0 text-center text-xs sm:text-sm">
                 All copyright reserved @2025
               </p>
               <div className="flex gap-x-5">

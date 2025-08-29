@@ -45,7 +45,7 @@ const Timer = () => {
                 {padded(timeLeft[label])}
               </div>
               {index !== keys.length - 1 && (
-                <p className="w-[14px] sm:w-[20px] lg:w-[30px] text-[35px] sm:text-[50px] lg:text-[80px] ml-1 sm:ml-2">
+                <p className="w-[14px] sm:w-[20px] lg:w-[30px] items-center flex justify-center text-[35px] sm:text-[50px] lg:text-[80px] ml-1 sm:ml-2">
                   :
                 </p>
               )}

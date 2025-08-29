@@ -45,7 +45,7 @@ const itemVariants = {
   visible: { y: 0, opacity: 1 },
 };
 
-const textVariants: any = {
+const textVariants = {
   hidden: { y: 50, opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
 };
@@ -63,10 +63,10 @@ const PropertyCarousel = () => {
         viewport={{ once: true, amount: 0.25 }}
         className="w-full"
       >
-        <motion.div className="mb-[70px]" variants={textVariants}>
-          <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle">
+        <motion.div className="mb-12 sm:mb-[70px]" variants={textVariants}>
+          <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] text-center font-chronicle px-4">
             This Is Not Just a Site Visit. <br />
-            <span className="text-[30px] sm:text-[45px]">
+            <span className="text-[28px] sm:text-[45px]">
               This is a{" "}
               <span className="relative inline-block font-bold">
                 Property Festival.
@@ -76,7 +76,7 @@ const PropertyCarousel = () => {
           </h2>
         </motion.div>
 
-        {/* ✅ FIX: Prevents items from wrapping to a new line on smaller screens */}
+        {/* This div enables horizontal scrolling on mobile */}
         <div className="flex flex-nowrap overflow-x-auto justify-start md:justify-center gap-8 px-[5%] pb-4">
           {data.map((item, index) => {
             const stiffness = baseStiffness - index * 50;
@@ -102,10 +102,11 @@ const PropertyCarousel = () => {
                   />
                   <div className="absolute inset-0 rounded-sm bg-black/40 transition-opacity duration-300 opacity-0 group-hover:opacity-100" />
                   <div className="absolute bottom-0 left-0 p-4 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-                    <p className="font-chronicle text-[40px] text-white">
+                    {/* ✅ RESPONSIVE FIX: Adjusted font sizes for mobile */}
+                    <p className="font-chronicle text-4xl sm:text-[40px] text-white">
                       {item.title}
                     </p>
-                    <p className="font-lato text-[22px] leading-[30px] italic break-words text-white">
+                    <p className="font-lato text-xl sm:text-[22px] leading-snug sm:leading-[30px] italic break-words text-white">
                       {item.description}
                     </p>
                   </div>
