@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 
 const data = [
   {
@@ -51,31 +51,19 @@ const textVariants: any = {
 };
 
 const PropertyCarousel = () => {
-  // 1. Create a ref to attach to the component's main container.
-  const ref = useRef(null);
-  // 2. Use the useInView hook to track visibility. Set `once: false` to allow re-triggering.
-  const isInView = useInView(ref, { once: false, amount: 0.1 });
-
-  // Define a base stiffness value and a damping value for the spring
   const baseStiffness = 300;
   const damping = 20;
 
   return (
-    // 3. Attach the ref to the main container.
-    <div className="w-full py-16 z-[20]" ref={ref}>
+    <div className="h-full w-full flex items-center justify-center z-[20]">
       <motion.div
         variants={containerVariants}
         initial="hidden"
-        // 4. Conditionally set the animate prop based on isInView.
-        animate={isInView ? "visible" : "hidden"}
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.25 }}
+        className="w-full"
       >
-        <motion.div
-          className=" mb-[70px]"
-          variants={textVariants}
-          initial="hidden"
-          // 4. Conditionally set the animate prop based on isInView.
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <motion.div className="mb-[70px]" variants={textVariants}>
           <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle">
             This Is Not Just a Site Visit. <br />
             <span className="text-[30px] sm:text-[45px]">
@@ -87,9 +75,10 @@ const PropertyCarousel = () => {
             </span>
           </h2>
         </motion.div>
-        <div className="flex justify-center gap-8 px-[5%]">
+
+        {/* ✅ FIX: Prevents items from wrapping to a new line on smaller screens */}
+        <div className="flex flex-nowrap overflow-x-auto justify-start md:justify-center gap-8 px-[5%] pb-4">
           {data.map((item, index) => {
-            // Calculate a decreasing stiffness value for each item
             const stiffness = baseStiffness - index * 50;
 
             return (
@@ -101,6 +90,7 @@ const PropertyCarousel = () => {
                   stiffness: stiffness,
                   damping: damping,
                 }}
+                className="flex-shrink-0" // Prevents items from shrinking
               >
                 <div className="relative group w-[304px] h-[357px]">
                   <Image
@@ -110,9 +100,7 @@ const PropertyCarousel = () => {
                     alt={`Property showcase image ${index + 1}`}
                     className="object-cover rounded-sm w-full h-full"
                   />
-                  {/* The new overlay that appears on hover */}
                   <div className="absolute inset-0 rounded-sm bg-black/40 transition-opacity duration-300 opacity-0 group-hover:opacity-100" />
-                  {/* Text container that appears on hover */}
                   <div className="absolute bottom-0 left-0 p-4 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
                     <p className="font-chronicle text-[40px] text-white">
                       {item.title}
