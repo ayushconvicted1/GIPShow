@@ -29,27 +29,21 @@ const MergedHeroPropertyComponent = () => {
   const [windowHeight, setWindowHeight] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const finalSectionRef = useRef < HTMLDivElement > null;
-  const [finalSectionHeight, setFinalSectionHeight] = useState(0);
+
+  // Removed finalSectionHeight state as it's no longer needed for calculations
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const handleResize = () => {
         setWindowHeight(window.innerHeight);
         setIsMobile(window.innerWidth < 768);
-        if (finalSectionRef.current) {
-          setFinalSectionHeight(finalSectionRef.current.scrollHeight);
-        }
       };
 
       handleResize();
       window.addEventListener("resize", handleResize);
 
-      // A timeout to ensure content is rendered before measuring.
-      const timer = setTimeout(handleResize, 100);
-
       return () => {
         window.removeEventListener("resize", handleResize);
-        clearTimeout(timer);
       };
     }
   }, []);
@@ -68,8 +62,6 @@ const MergedHeroPropertyComponent = () => {
     damping: 30,
     restDelta: 0.001,
   };
-
-  // --- RE-TIMED ANIMATION SEQUENCE ---
 
   // Hero Section Animations
   const heroScale = useTransform(smoothScrollYProgress, [0, 0.05], [1, 0.3]);
@@ -98,7 +90,6 @@ const MergedHeroPropertyComponent = () => {
     [0.03, 0.04],
     [200, 0]
   );
-
   const desktopBuildingY = useTransform(
     smoothScrollYProgress,
     [0.04, 0.05],
@@ -110,7 +101,6 @@ const MergedHeroPropertyComponent = () => {
     [300, 0]
   );
   const buildingY = isMobile ? mobileBuildingY : desktopBuildingY;
-
   const desktopBuildingOpacity = useTransform(
     smoothScrollYProgress,
     [0.04, 0.05],
@@ -124,9 +114,7 @@ const MergedHeroPropertyComponent = () => {
   const buildingOpacity = isMobile
     ? mobileBuildingOpacity
     : desktopBuildingOpacity;
-
   const buttonY = useTransform(smoothScrollYProgress, [0, 0.01], [0, 100]);
-
   const heroSectionTransform = useTransform(
     smoothScrollYProgress,
     [0.08, 0.13],
@@ -137,7 +125,6 @@ const MergedHeroPropertyComponent = () => {
     sectionSpringConfig
   );
   const heroSectionY = isMobile ? heroSectionTransform : heroSectionSpring;
-
   const heroSectionOpacity = useTransform(
     smoothScrollYProgress,
     [0.08, 0.13],
@@ -171,7 +158,6 @@ const MergedHeroPropertyComponent = () => {
     [0.15, 0.18, 0.22, 0.25],
     [0, 1, 1, 0]
   );
-
   const lootContainerTransform = useTransform(
     smoothScrollYProgress,
     [0.1, 0.15, 0.23, 0.28],
@@ -184,7 +170,6 @@ const MergedHeroPropertyComponent = () => {
   const lootContainerY = isMobile
     ? lootContainerTransform
     : lootContainerSpring;
-
   const lootContainerOpacity = useTransform(
     smoothScrollYProgress,
     [0.1, 0.15, 0.23, 0.28],
@@ -204,7 +189,6 @@ const MergedHeroPropertyComponent = () => {
   const festivalSectionY = isMobile
     ? festivalSectionTransform
     : festivalSectionSpring;
-
   const festivalSectionOpacity = useTransform(
     smoothScrollYProgress,
     [0.25, 0.3, 0.38, 0.43],
@@ -232,7 +216,6 @@ const MergedHeroPropertyComponent = () => {
   );
   const section1Spring = useSpring(section1Transform, sectionSpringConfig);
   const section1Y = isMobile ? section1Transform : section1Spring;
-
   const section1Opacity = useTransform(
     smoothScrollYProgress,
     [0.4, 0.45, 0.53, 0.58],
@@ -247,7 +230,6 @@ const MergedHeroPropertyComponent = () => {
   );
   const section2Spring = useSpring(section2Transform, sectionSpringConfig);
   const section2Y = isMobile ? section2Transform : section2Spring;
-
   const section2Opacity = useTransform(
     smoothScrollYProgress,
     [0.55, 0.6, 0.68, 0.73],
@@ -267,7 +249,6 @@ const MergedHeroPropertyComponent = () => {
   );
   const section3Spring = useSpring(section3Transform, sectionSpringConfig);
   const section3Y = isMobile ? section3Transform : section3Spring;
-
   const section3Opacity = useTransform(
     smoothScrollYProgress,
     [0.7, 0.75, 0.83, 0.88],
@@ -315,37 +296,31 @@ const MergedHeroPropertyComponent = () => {
     [0, 1]
   );
 
-  // Form Section (Section 6)
+  // Form Section (Section 6) - Adjusted timeline to prevent overlap
   const section4Transform = useTransform(
     smoothScrollYProgress,
-    [0.85, 0.9, 0.94, 0.98],
+    [0.85, 0.9, 0.93, 0.95],
     [windowHeight, 0, 0, -windowHeight]
   );
   const section4Spring = useSpring(section4Transform, sectionSpringConfig);
   const section4Y = isMobile ? section4Transform : section4Spring;
-
   const section4Opacity = useTransform(
     smoothScrollYProgress,
-    [0.85, 0.9, 0.94, 0.98],
+    [0.85, 0.9, 0.93, 0.95],
     [0, 1, 1, 0]
   );
 
-  // Final Section (Testimonials/Footer)
-  const finalYEndPosition =
-    finalSectionHeight > windowHeight
-      ? -(finalSectionHeight - windowHeight) - 80 // ✅ FIX: Increased buffer to 80px.
-      : 0;
+  // Final Section (Testimonials/Footer) - Animate in to y=0 and stay
   const finalSectionTransform = useTransform(
     smoothScrollYProgress,
     [0.95, 1.0],
-    [windowHeight, finalYEndPosition]
+    [windowHeight, 0]
   );
   const finalSectionSpring = useSpring(
     finalSectionTransform,
     sectionSpringConfig
   );
   const finalSectionY = isMobile ? finalSectionTransform : finalSectionSpring;
-
   const finalSectionOpacity = useTransform(
     smoothScrollYProgress,
     [0.95, 1.0],
@@ -373,14 +348,12 @@ const MergedHeroPropertyComponent = () => {
       threeText: "",
     },
   ];
-
   const possibilitiedData = [
     { id: 1, imgNo: 1, text: "Meet 30+ Top Developers" },
     { id: 2, imgNo: 2, text: "On-Spot Exclusive Deals" },
     { id: 3, imgNo: 3, text: "All Luxury Projects Under One Roof" },
     { id: 4, imgNo: 4, text: "Discover Your Dream Home" },
   ];
-
   const testimonials = [
     {
       name: "Mr. Vihaan Jain",
@@ -403,13 +376,11 @@ const MergedHeroPropertyComponent = () => {
   ];
 
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
   const nextTestimonial = () => {
     setCurrentTestimonial((prev) =>
       prev === testimonials.length - 1 ? 0 : prev + 1
     );
   };
-
   const prevTestimonial = () => {
     setCurrentTestimonial((prev) =>
       prev === 0 ? testimonials.length - 1 : prev - 1
@@ -423,7 +394,6 @@ const MergedHeroPropertyComponent = () => {
       animate={{ opacity: windowHeight > 0 ? 1 : 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* HERO SECTION CONTAINER */}
       <motion.div
         className="fixed inset-0 w-full h-full z-10"
         style={{
@@ -514,9 +484,7 @@ const MergedHeroPropertyComponent = () => {
         >
           <div
             className="w-full h-[250px] sm:h-[500px] lg:h-[1000px] bg-cover bg-bottom bg-no-repeat"
-            style={{
-              backgroundImage: "url('/BuildingsBG.webp')",
-            }}
+            style={{ backgroundImage: "url('/BuildingsBG.webp')" }}
           />
         </motion.div>
         <motion.div
@@ -529,7 +497,6 @@ const MergedHeroPropertyComponent = () => {
         </motion.div>
       </motion.div>
 
-      {/* PROPERTY LOOT SECTION */}
       <motion.div
         className="fixed inset-0 w-full h-full z-20"
         style={{
@@ -601,7 +568,6 @@ const MergedHeroPropertyComponent = () => {
         </motion.div>
       </motion.div>
 
-      {/* PROPERTY FESTIVAL SECTION */}
       <motion.div
         className="fixed inset-0 w-full h-full z-30 bg-[#171A34]"
         style={{
@@ -652,7 +618,6 @@ const MergedHeroPropertyComponent = () => {
         </div>
       </motion.div>
 
-      {/* PROPERTY CAROUSEL SECTION */}
       <motion.div
         className="fixed inset-0 w-full h-full z-40 bg-[#171A34] flex items-center justify-center"
         style={{
@@ -664,7 +629,6 @@ const MergedHeroPropertyComponent = () => {
         <PropertyCarousel />
       </motion.div>
 
-      {/* DEVELOPERS SECTION */}
       <motion.div
         className="fixed inset-0 h-full z-50 bg-[#171A34] pt-16 sm:pt-[70px]"
         style={{
@@ -715,7 +679,6 @@ const MergedHeroPropertyComponent = () => {
         </div>
       </motion.div>
 
-      {/* FOCUS PROJECTS SECTION */}
       <motion.div
         className="fixed inset-0 h-full w-full z-60 bg-[#171A34]"
         style={{
@@ -822,7 +785,6 @@ const MergedHeroPropertyComponent = () => {
         </div>
       </motion.div>
 
-      {/* FORM SECTION */}
       <motion.div
         id="form-section"
         className="fixed inset-0 h-full w-full z-70"
@@ -883,10 +845,8 @@ const MergedHeroPropertyComponent = () => {
         </div>
       </motion.div>
 
-      {/* SPACER DIV */}
       <div className="h-[1200vh]" />
 
-      {/* FINAL SECTION (TESTIMONIALS & FOOTER) */}
       <motion.div
         className="fixed inset-0 w-full z-80 bg-[#171A34]"
         style={{
@@ -897,7 +857,7 @@ const MergedHeroPropertyComponent = () => {
       >
         <motion.div
           ref={finalSectionRef}
-          className="w-full flex flex-col justify-between min-h-screen p-4 pt-20 sm:pt-4"
+          className="w-full h-full flex flex-col p-4 pt-20 sm:pt-4 overflow-y-scroll no-scrollbar"
         >
           <div className="w-full flex flex-col items-center justify-start max-w-7xl mx-auto mb-10">
             <ScrollReveal>
@@ -962,7 +922,7 @@ const MergedHeroPropertyComponent = () => {
               </div>
             </ScrollReveal>
           </div>
-          <div>
+          <div className="mt-auto">
             <footer className="relative w-full">
               <Image
                 src="/FooterBG.png"
