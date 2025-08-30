@@ -439,7 +439,7 @@ const MergedHeroPropertyComponent = () => {
           </p>
         </motion.div>
         <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center px-4"
+          className="absolute inset-0 flex flex-col items-center pt-[50%] lg:pt-[10%] px-4"
           style={{ opacity: newContentOpacity, y: newContentY }}
         >
           <div>
@@ -479,17 +479,17 @@ const MergedHeroPropertyComponent = () => {
           </div>
         </motion.div>
         <motion.div
-          className="absolute bottom-0 left-0 w-full pointer-events-none"
+          className="absolute bottom-0 lg:bottom-[10%] left-0 w-full pointer-events-none"
           style={{ y: buildingY, opacity: buildingOpacity }}
         >
           <div
-            className="w-full h-[250px] sm:h-[500px] lg:h-[1000px] bg-cover bg-bottom bg-no-repeat"
+            className="w-full h-[500px] lg:h-[1000px] bg-cover bg-bottom bg-no-repeat"
             style={{ backgroundImage: "url('/BuildingsBG.webp')" }}
           />
         </motion.div>
         <motion.div
           className="absolute w-full flex flex-col items-center mt-2"
-          style={{ y: buttonY, top: isMobile ? "80%" : "75%" }}
+          style={{ y: buttonY, top: isMobile ? "70%" : "75%" }}
         >
           <ScrollToFormButton className="absolute -top-18 bg-gradient-to-r from-[#FBF09C] via-[#C6932F] to-[#FBF09C] hover:opacity-90 hover:scale-105 transition-transform text-[#2F2F2F] px-6 py-2 text-xl sm:px-8 sm:py-3 sm:text-[28px] font-chronicle rounded-md shadow-lg whitespace-nowrap">
             Register Now
@@ -799,10 +799,10 @@ const MergedHeroPropertyComponent = () => {
           className="w-full h-full bg-[url(/FormBG.png)] bg-cover bg-center flex justify-between flex-col lg:flex-row p-4 pt-20 sm:pt-[140px] lg:px-[8%]"
         >
           <div className="lg:w-[50%]">
-            <p className="flex items-center font-lato text-base md:text-[18px] lg:max-w-[70%] text-white font-[700] gap-2 mb-5">
+            <p className="flex items-center font-lato text-base md:text-[18px] lg:max-w-[70%] text-white font-[700] mb-5">
               <IoLocationOutline
-                size={40}
-                className="md:size-[60px] flex-shrink-0"
+                size={30}
+                className="md:size-[40px] flex-shrink-0"
                 color="#fff"
               />
               <span>
@@ -811,11 +811,7 @@ const MergedHeroPropertyComponent = () => {
               </span>
             </p>
             <p className="flex items-center font-lato italic text-lg text-white font-[700] gap-2 mb-4 lg:pl-[5px]">
-              <FaRegClock
-                size={40}
-                className="flex-shrink- mr-[5px]"
-                color="#fff"
-              />
+              <FaRegClock size={30} className="flex-shrink" color="#fff" />
               <span>10AM Onwards</span>
             </p>
             <div className="text-white text-[40px] lg:text-[50px] leading-[60px] font-chronicle">

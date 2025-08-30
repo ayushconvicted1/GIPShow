@@ -258,7 +258,7 @@ const MultiStepForm = () => {
               value={formData.propertyType}
               onChange={handleChange}
               required
-              className={`w-full appearance-none px-4 py-2 pr-10 rounded-md border border-[#fff] text-[#fff] text-sm sm:text-[16px] outline-none italic font-lato transition-colors ${"bg-[#171a34]"}`}
+              className={`w-full appearance-none px-4 py-2 pr-10 rounded-md border border-[#fff] text-[#fff] text-sm sm:text-[16px] outline-none italic font-lato transition-colors ${"bg-transparent"}`}
             >
               <option value="">Type of Property</option>
               <option value="Apartment">Apartment</option>

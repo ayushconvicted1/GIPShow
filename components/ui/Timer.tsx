@@ -45,18 +45,18 @@ const Timer = () => {
       <div className="flex flex-row items-start justify-center text-white gap-1 sm:gap-2">
         {keys.map((label, index) => (
           <React.Fragment key={label}>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center relative">
               {/* ✅ FIX: Increased size on mobile/tablet to fill space, while preserving original desktop dimensions. */}
+              <p className="absolute -top-6 font-lato font-[700] italic text-[14px] lg:text-[18px] left-0">
+                {label === "Days" && label}
+              </p>
+
               <div className="w-[70px] h-[100px] sm:w-[80px] sm:h-[140px] lg:w-[162px] lg:h-[227px] bg-white/20 backdrop-blur-sm rounded-[15px] lg:rounded-[30px] flex items-center justify-center">
                 {/* ✅ Responsive font sizes to match the box sizes. */}
                 <span className="font-agency font-bold text-[35px] sm:text-[60px] lg:text-[100px] text-white">
                   {padded(timeLeft[label])}
                 </span>
               </div>
-              {/* ✅ The label remains centered below for a clean, responsive layout. */}
-              <p className="mt-2 text-xs sm:text-sm font-lato italic text-white/80">
-                {label}
-              </p>
             </div>
 
             {/* ✅ FIX: Re-added the colon separators with responsive vertical alignment. */}
