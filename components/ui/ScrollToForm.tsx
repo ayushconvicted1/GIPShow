@@ -14,7 +14,7 @@ const ScrollToFormButton = ({ children, className, ...props }: Props) => {
       document.documentElement.scrollHeight - window.innerHeight;
 
     // Target a scroll progress of 0.9, where the form is fully visible.
-    const targetScrollY = scrollableHeight * 0.9;
+    const targetScrollY = scrollableHeight * 0.8;
 
     window.scrollTo({
       top: targetScrollY,

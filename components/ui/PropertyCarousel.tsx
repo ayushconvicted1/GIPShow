@@ -64,7 +64,7 @@ const PropertyCarousel = () => {
         className="w-full"
       >
         <motion.div className="mb-12 sm:mb-[70px]" variants={textVariants}>
-          <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] leading-[55px] text-center font-chronicle px-4">
+          <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] lg:leading-[55px] text-center font-chronicle px-4">
             This Is Not Just a Site Visit. <br />
             <span className="text-[28px] sm:text-[45px]">
               This is a{" "}

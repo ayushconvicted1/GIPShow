@@ -30,8 +30,6 @@ const MergedHeroPropertyComponent = () => {
   const [isMobile, setIsMobile] = useState(false);
   const finalSectionRef = useRef < HTMLDivElement > null;
 
-  // Removed finalSectionHeight state as it's no longer needed for calculations
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       const handleResize = () => {
@@ -50,11 +48,8 @@ const MergedHeroPropertyComponent = () => {
 
   const { scrollYProgress } = useScroll();
 
-  const smoothScrollYProgress = useSpring(scrollYProgress, {
-    mass: 0.1,
-    stiffness: 100,
-    damping: 20,
-  });
+  // REMOVED useSpring for a more direct 1-to-1 scroll mapping
+  const smoothScrollYProgress = scrollYProgress;
 
   const sectionSpringConfig = {
     mass: 0.5,
@@ -63,7 +58,9 @@ const MergedHeroPropertyComponent = () => {
     restDelta: 0.001,
   };
 
-  // Hero Section Animations
+  // --- RE-ARCHITECTED ANIMATION TIMELINE ---
+
+  // Hero Section Animations (On screen from 0 to 0.125)
   const heroScale = useTransform(smoothScrollYProgress, [0, 0.05], [1, 0.3]);
   const heroOpacityInitial = useTransform(
     smoothScrollYProgress,
@@ -90,242 +87,234 @@ const MergedHeroPropertyComponent = () => {
     [0.03, 0.04],
     [200, 0]
   );
-  const desktopBuildingY = useTransform(
+  const buildingY = useTransform(
     smoothScrollYProgress,
-    [0.04, 0.05],
-    [600, 350]
+    [0.03, 0.05],
+    [isMobile ? 300 : 600, isMobile ? 0 : 350]
   );
-  const mobileBuildingY = useTransform(
+  const buildingOpacity = useTransform(
     smoothScrollYProgress,
-    [0.03, 0.04],
-    [300, 0]
-  );
-  const buildingY = isMobile ? mobileBuildingY : desktopBuildingY;
-  const desktopBuildingOpacity = useTransform(
-    smoothScrollYProgress,
-    [0.04, 0.05],
+    [0.03, 0.05],
     [0, 1]
   );
-  const mobileBuildingOpacity = useTransform(
-    smoothScrollYProgress,
-    [0.03, 0.04],
-    [0, 1]
-  );
-  const buildingOpacity = isMobile
-    ? mobileBuildingOpacity
-    : desktopBuildingOpacity;
   const buttonY = useTransform(smoothScrollYProgress, [0, 0.01], [0, 100]);
   const heroSectionTransform = useTransform(
     smoothScrollYProgress,
-    [0.08, 0.13],
+    [0.08, 0.125],
     [0, -windowHeight]
   );
   const heroSectionSpring = useSpring(
     heroSectionTransform,
     sectionSpringConfig
   );
-  const heroSectionY = isMobile ? heroSectionTransform : heroSectionSpring;
+  // ✅ FIX: Applied spring to all devices for a smoother animation.
+  const heroSectionY = heroSectionSpring;
   const heroSectionOpacity = useTransform(
     smoothScrollYProgress,
-    [0.08, 0.13],
+    [0.08, 0.125],
     [1, 0]
   );
 
-  // Property Loot Section (Section 1)
-  const lootTextY = useTransform(
-    smoothScrollYProgress,
-    [0.1, 0.15],
-    [300, -200]
-  );
-  const lootTextOpacity = useTransform(
-    smoothScrollYProgress,
-    [0.1, 0.12],
-    [0, 1]
-  );
-  const lootImageScale = useTransform(
-    smoothScrollYProgress,
-    [0.1, 0.2, 0.25],
-    [1, 1.2, 0.6]
-  );
-  const lootImageOpacity = useTransform(
-    smoothScrollYProgress,
-    [0.1, 0.15, 0.25],
-    [0, 0.9, 0.4]
-  );
-  const playButtonScale = lootImageScale;
-  const playButtonOpacity = useTransform(
-    smoothScrollYProgress,
-    [0.15, 0.18, 0.22, 0.25],
-    [0, 1, 1, 0]
-  );
+  // Property Loot Section (On screen from 0.125 to 0.25)
   const lootContainerTransform = useTransform(
     smoothScrollYProgress,
-    [0.1, 0.15, 0.23, 0.28],
+    [0.1, 0.15, 0.22, 0.25],
     [windowHeight, 0, 0, -windowHeight]
   );
   const lootContainerSpring = useSpring(
     lootContainerTransform,
     sectionSpringConfig
   );
-  const lootContainerY = isMobile
-    ? lootContainerTransform
-    : lootContainerSpring;
+  // ✅ FIX: Applied spring to all devices for a smoother animation.
+  const lootContainerY = lootContainerSpring;
   const lootContainerOpacity = useTransform(
     smoothScrollYProgress,
-    [0.1, 0.15, 0.23, 0.28],
+    [0.1, 0.15, 0.22, 0.25],
+    [0, 1, 1, 0]
+  );
+  const lootTextY = useTransform(
+    smoothScrollYProgress,
+    [0.12, 0.17],
+    [300, -200]
+  );
+  const lootTextOpacity = useTransform(
+    smoothScrollYProgress,
+    [0.12, 0.14],
+    [0, 1]
+  );
+  const lootImageScale = useTransform(
+    smoothScrollYProgress,
+    [0.12, 0.22, 0.25],
+    [1, 1.2, 0.6]
+  );
+  const lootImageOpacity = useTransform(
+    smoothScrollYProgress,
+    [0.12, 0.17, 0.25],
+    [0, 0.9, 0.4]
+  );
+  const playButtonScale = lootImageScale;
+  const playButtonOpacity = useTransform(
+    smoothScrollYProgress,
+    [0.17, 0.2, 0.22, 0.25],
     [0, 1, 1, 0]
   );
 
-  // Property Festival Section (Section 2)
+  // Property Festival Section (On screen from 0.25 to 0.375)
   const festivalSectionTransform = useTransform(
     smoothScrollYProgress,
-    [0.25, 0.3, 0.38, 0.43],
+    [0.22, 0.27, 0.345, 0.375],
     [windowHeight, 0, 0, -windowHeight]
   );
   const festivalSectionSpring = useSpring(
     festivalSectionTransform,
     sectionSpringConfig
   );
-  const festivalSectionY = isMobile
-    ? festivalSectionTransform
-    : festivalSectionSpring;
+  // ✅ FIX: Applied spring to all devices for a smoother animation.
+  const festivalSectionY = festivalSectionSpring;
   const festivalSectionOpacity = useTransform(
     smoothScrollYProgress,
-    [0.25, 0.3, 0.38, 0.43],
+    [0.22, 0.27, 0.345, 0.375],
     [0, 1, 1, 0]
   );
   const itemSpringOptions = { stiffness: 200, damping: 50 };
   const leftItemX = useSpring(
-    useTransform(smoothScrollYProgress, [0.28, 0.35], [-800, 0]),
+    useTransform(smoothScrollYProgress, [0.25, 0.32], [-800, 0]),
     itemSpringOptions
   );
   const rightItemX = useSpring(
-    useTransform(smoothScrollYProgress, [0.28, 0.35], [800, 0]),
+    useTransform(smoothScrollYProgress, [0.25, 0.32], [800, 0]),
     itemSpringOptions
   );
   const middleItemY = useSpring(
-    useTransform(smoothScrollYProgress, [0.28, 0.35], [300, 0]),
+    useTransform(smoothScrollYProgress, [0.25, 0.32], [300, 0]),
     itemSpringOptions
   );
 
-  // Property Carousel (Section 3)
+  // Property Carousel (On screen from 0.375 to 0.5)
   const section1Transform = useTransform(
     smoothScrollYProgress,
-    [0.4, 0.45, 0.53, 0.58],
+    [0.345, 0.395, 0.47, 0.5],
     [windowHeight, 0, 0, -windowHeight]
   );
   const section1Spring = useSpring(section1Transform, sectionSpringConfig);
-  const section1Y = isMobile ? section1Transform : section1Spring;
+  // ✅ FIX: Applied spring to all devices for a smoother animation.
+  const section1Y = section1Spring;
   const section1Opacity = useTransform(
     smoothScrollYProgress,
-    [0.4, 0.45, 0.53, 0.58],
+    [0.345, 0.395, 0.47, 0.5],
     [0, 1, 1, 0]
   );
 
-  // Developers Section (Section 4)
+  // Developers Section (On screen from 0.5 to 0.625)
   const section2Transform = useTransform(
     smoothScrollYProgress,
-    [0.55, 0.6, 0.68, 0.73],
+    [0.47, 0.52, 0.595, 0.625],
     [windowHeight, 0, 0, -windowHeight]
   );
   const section2Spring = useSpring(section2Transform, sectionSpringConfig);
-  const section2Y = isMobile ? section2Transform : section2Spring;
+  // ✅ FIX: Applied spring to all devices for a smoother animation.
+  const section2Y = section2Spring;
   const section2Opacity = useTransform(
     smoothScrollYProgress,
-    [0.55, 0.6, 0.68, 0.73],
+    [0.47, 0.52, 0.595, 0.625],
     [0, 1, 1, 0]
   );
   const section2ContentY = useTransform(
     smoothScrollYProgress,
-    [0.6, 0.68],
-    [0, -700]
+    [0.52, 0.595],
+    [0, -500]
   );
 
-  // Focus Projects Section (Section 5)
+  // Focus Projects Section (On screen from 0.625 to 0.75)
   const section3Transform = useTransform(
     smoothScrollYProgress,
-    [0.7, 0.75, 0.83, 0.88],
+    [0.595, 0.645, 0.72, 0.75],
     [windowHeight, 0, 0, -windowHeight]
   );
   const section3Spring = useSpring(section3Transform, sectionSpringConfig);
-  const section3Y = isMobile ? section3Transform : section3Spring;
+  // ✅ FIX: Applied spring to all devices for a smoother animation.
+  const section3Y = section3Spring;
   const section3Opacity = useTransform(
     smoothScrollYProgress,
-    [0.7, 0.75, 0.83, 0.88],
+    [0.595, 0.645, 0.72, 0.75],
     [0, 1, 1, 0]
   );
   const section3ContentY = useTransform(
     smoothScrollYProgress,
-    [0.75, 0.83],
-    [0, -500]
+    [0.645, 0.72],
+    [0, isMobile ? -200 : -500]
   );
   const image1X = useSpring(
-    useTransform(smoothScrollYProgress, [0.71, 0.74], [-300, 0]),
+    useTransform(smoothScrollYProgress, [0.6, 0.65], [-300, 0]),
     itemSpringOptions
   );
   const image1Opacity = useTransform(
     smoothScrollYProgress,
-    [0.71, 0.74],
+    [0.6, 0.65],
     [0, 1]
   );
   const image2X = useSpring(
-    useTransform(smoothScrollYProgress, [0.71, 0.74], [300, 0]),
+    useTransform(smoothScrollYProgress, [0.6, 0.65], [300, 0]),
     itemSpringOptions
   );
   const image2Opacity = useTransform(
     smoothScrollYProgress,
-    [0.71, 0.74],
+    [0.6, 0.65],
     [0, 1]
   );
   const image3X = useSpring(
-    useTransform(smoothScrollYProgress, [0.75, 0.78], [-300, 0]),
+    useTransform(smoothScrollYProgress, [0.64, 0.69], [-300, 0]),
     itemSpringOptions
   );
   const image3Opacity = useTransform(
     smoothScrollYProgress,
-    [0.75, 0.78],
+    [0.64, 0.69],
     [0, 1]
   );
   const image4X = useSpring(
-    useTransform(smoothScrollYProgress, [0.75, 0.78], [300, 0]),
+    useTransform(smoothScrollYProgress, [0.64, 0.69], [300, 0]),
     itemSpringOptions
   );
   const image4Opacity = useTransform(
     smoothScrollYProgress,
-    [0.75, 0.78],
+    [0.64, 0.69],
     [0, 1]
   );
 
-  // Form Section (Section 6) - Adjusted timeline to prevent overlap
+  // Form Section (On screen from 0.75 to 0.875)
   const section4Transform = useTransform(
     smoothScrollYProgress,
-    [0.85, 0.9, 0.93, 0.95],
+    [0.72, 0.77, 0.845, 0.875],
     [windowHeight, 0, 0, -windowHeight]
   );
   const section4Spring = useSpring(section4Transform, sectionSpringConfig);
-  const section4Y = isMobile ? section4Transform : section4Spring;
+  // ✅ FIX: Applied spring to all devices for a smoother animation.
+  const section4Y = section4Spring;
   const section4Opacity = useTransform(
     smoothScrollYProgress,
-    [0.85, 0.9, 0.93, 0.95],
+    [0.72, 0.77, 0.845, 0.875],
     [0, 1, 1, 0]
   );
 
-  // Final Section (Testimonials/Footer) - Animate in to y=0 and stay
+  // Final Section (On screen from 0.875 to 1.0)
   const finalSectionTransform = useTransform(
     smoothScrollYProgress,
-    [0.95, 1.0],
+    [0.845, 0.9],
     [windowHeight, 0]
   );
   const finalSectionSpring = useSpring(
     finalSectionTransform,
     sectionSpringConfig
   );
-  const finalSectionY = isMobile ? finalSectionTransform : finalSectionSpring;
+  // ✅ FIX: Applied spring to all devices for a smoother animation.
+  const finalSectionY = finalSectionSpring;
   const finalSectionOpacity = useTransform(
     smoothScrollYProgress,
-    [0.95, 1.0],
+    [0.845, 0.9],
     [0, 1]
   );
+
+  // --- END OF RE-ARCHITECTED TIMELINE ---
 
   const renderItems = [
     {
@@ -447,7 +436,7 @@ const MergedHeroPropertyComponent = () => {
               <p className="font-agency font-bold text-2xl sm:text-[40px] text-white mr-1 sm:mr-[10px]">
                 September
               </p>
-              <div className="px-2 sm:pl-[10px] sm:pr-[22px] border-x-2 h-[50px] sm:h-[70px] flex items-center justify-center relative">
+              <div className="px-2 pl-[10px] pr-6 sm:pr-8 border-x-2 h-[50px] sm:h-[70px] flex items-center justify-center relative">
                 <p className="font-agency font-bold text-[45px] sm:text-[70px] text-white">
                   28
                   <sup className="text-xs sm:text-[20px] absolute top-1 sm:top-5">
@@ -497,6 +486,8 @@ const MergedHeroPropertyComponent = () => {
         </motion.div>
       </motion.div>
 
+      {/* All subsequent sections follow the same JSX structure, only the style props are changed above */}
+
       <motion.div
         className="fixed inset-0 w-full h-full z-20"
         style={{
@@ -538,14 +529,18 @@ const MergedHeroPropertyComponent = () => {
             <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] font-chronicle">
               India's{" "}
               <span className="relative inline-block">
-                <span className="font-bold">Biggest Property Loot!</span>
+                <span className="font-bold lg:leading-[55px]">
+                  Biggest Property Loot!
+                </span>
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full"></div>
               </span>
             </h2>
             <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] font-chronicle">
               Only on{" "}
               <span className="relative inline-block">
-                <span className="font-bold">28th September!</span>
+                <span className="font-bold lg:leading-[55px]">
+                  28th September!
+                </span>
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full"></div>
               </span>
             </h2>
@@ -577,10 +572,10 @@ const MergedHeroPropertyComponent = () => {
         }}
       >
         <div className="h-full flex flex-col items-center justify-center px-4">
-          <div className="mt-20 mb-12">
-            <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] leading-[55px] text-center font-chronicle">
+          <div className="mt-12 mb-8 sm:mt-20 sm:mb-12">
+            <h2 className="text-white text-xl sm:text-[32px] md:text-[40px] leading-tight md:leading-tight text-center font-chronicle">
               This Is Not Just a Site Visit. <br />
-              <span className="text-[28px] sm:text-[45px]">
+              <span className="text-[26px] sm:text-[45px] leading-tight">
                 This is a{" "}
                 <span className="relative inline-block font-bold">
                   Property Festival.
@@ -589,7 +584,7 @@ const MergedHeroPropertyComponent = () => {
               </span>
             </h2>
           </div>
-          <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center mt-12 gap-8 lg:w-[70%]">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center mt-8 gap-6 lg:w-[70%]">
             {renderItems.map((item, index) => (
               <motion.div
                 key={index}
@@ -605,9 +600,9 @@ const MergedHeroPropertyComponent = () => {
                   height={120}
                   width={120}
                   alt="Feature Icon"
-                  className="pb-[10px] w-[120px] h-[120px] lg:w-[175px] lg:h-[175px]"
+                  className="pb-[10px] w-[100px] h-[100px] lg:w-[175px] lg:h-[175px]"
                 />
-                <p className="text-center font-lato text-xl leading-snug lg:text-[30px] lg:leading-[34px] italic text-white px-4 sm:px-[25%]">
+                <p className="text-center font-lato text-base leading-snug lg:text-[30px] lg:leading-[34px] italic text-white px-4">
                   {item.oneText}{" "}
                   <span className="font-bold">{item.twoText}</span>
                   {item?.lineBreak} {item.threeText}
@@ -619,7 +614,7 @@ const MergedHeroPropertyComponent = () => {
       </motion.div>
 
       <motion.div
-        className="fixed inset-0 w-full h-full z-40 bg-[#171A34] flex items-center justify-center"
+        className="fixed inset-0 w-full h-full z-40 bg-[#171A34]"
         style={{
           y: section1Y,
           opacity: section1Opacity,
@@ -630,7 +625,7 @@ const MergedHeroPropertyComponent = () => {
       </motion.div>
 
       <motion.div
-        className="fixed inset-0 h-full z-50 bg-[#171A34] pt-16 sm:pt-[70px]"
+        className="fixed inset-0 z-50 bg-[#171A34] pt-12 sm:pt-[70px]"
         style={{
           y: section2Y,
           opacity: section2Opacity,
@@ -640,13 +635,13 @@ const MergedHeroPropertyComponent = () => {
         <div className="w-full h-full relative">
           <motion.div style={{ y: section2ContentY, willChange: "transform" }}>
             <ScrollReveal>
-              <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] text-center font-chronicle mt-10">
+              <h2 className="text-white text-xl sm:text-[32px] md:text-[40px] text-center font-chronicle mt-8">
                 <span className="underline-gold-gradient font-bold">
                   Developers
                 </span>{" "}
                 You trust.
               </h2>
-              <h2 className="text-white text-[28px] sm:text-[36px] md:text-[46px] text-center font-chronicle">
+              <h2 className="text-white text-[24px] sm:text-[36px] md:text-[46px] text-center font-chronicle">
                 Offers{" "}
                 <span className="underline-gold-gradient font-bold">
                   You Can't Miss.
@@ -654,19 +649,20 @@ const MergedHeroPropertyComponent = () => {
               </h2>
             </ScrollReveal>
             <ScrollReveal>
-              <div className="relative w-full mt-10 sm:mt-[72px] mb-20 sm:mb-[144px]">
+              <div className="relative w-full mt-6 sm:mt-10 mb-6 sm:mb-10">
                 <Image
                   src="/LogosBG.png"
                   alt="Logos Background"
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  sizes="100vw"
+                  style={{ objectFit: "cover" }}
                   className="z-[0]"
                 />
                 <LogoCarousel />
               </div>
             </ScrollReveal>
             <ScrollReveal>
-              <h2 className="text-white text-2xl sm:text-[32px] md:text-[40px] text-center font-chronicle mt-6">
+              <h2 className="text-white text-xl sm:text-[32px] md:text-[40px] text-center font-chronicle mt-4">
                 One Event.{" "}
                 <span className="underline-gold-gradient font-bold">
                   Unlimited Possibilities.
@@ -674,7 +670,6 @@ const MergedHeroPropertyComponent = () => {
               </h2>
             </ScrollReveal>
             <PossibilitiesGrid data={possibilitiedData} />
-            <div className="h-48"></div>
           </motion.div>
         </div>
       </motion.div>
@@ -687,20 +682,20 @@ const MergedHeroPropertyComponent = () => {
           willChange: "transform, opacity",
         }}
       >
-        <div className="w-full relative flex flex-col pt-16 sm:pt-[70px] items-center">
+        <div className="w-full relative flex flex-col pt-12 sm:pt-[70px] items-center">
           <motion.div
             className="text-center text-white p-4 sm:p-8 flex flex-col items-center w-full"
             style={{ y: section3ContentY, willChange: "transform" }}
           >
             <ScrollReveal>
-              <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] text-center font-chronicle px-4">
+              <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle px-4">
                 Our{" "}
                 <span className="underline-gold-gradient font-bold">
                   Focus Projects.
                 </span>
               </h2>
             </ScrollReveal>
-            <div className="flex flex-col lg:flex-row justify-center items-center gap-8 mt-12 w-full max-w-screen-xl px-4">
+            <div className="flex flex-col lg:flex-row justify-center items-center gap-6 mt-8 w-full max-w-screen-xl px-4">
               <motion.div
                 className="w-full lg:w-1/2 flex justify-center lg:justify-end"
                 style={{
@@ -740,7 +735,7 @@ const MergedHeroPropertyComponent = () => {
                 />
               </motion.div>
             </div>
-            <div className="flex flex-col lg:flex-row justify-center items-center gap-8 mt-8 lg:mt-12 w-full max-w-screen-xl px-4">
+            <div className="flex flex-col lg:flex-row justify-center items-center gap-6 mt-6 lg:mt-10 w-full max-w-screen-xl px-4">
               <motion.div
                 className="w-full lg:w-1/2 flex justify-center lg:justify-end"
                 style={{
@@ -780,7 +775,6 @@ const MergedHeroPropertyComponent = () => {
                 />
               </motion.div>
             </div>
-            <div className="h-48"></div>
           </motion.div>
         </div>
       </motion.div>
@@ -796,13 +790,13 @@ const MergedHeroPropertyComponent = () => {
       >
         <div
           id="registration-form"
-          className="w-full h-full bg-[url(/FormBG.png)] bg-cover bg-center flex justify-between flex-col lg:flex-row p-4 pt-20 sm:pt-[140px] lg:px-[8%]"
+          className="w-full h-full bg-[url(/FormBG.png)] bg-cover bg-center flex justify-between flex-col lg:flex-row p-4 pt-16 sm:pt-28 lg:px-[8%]"
         >
-          <div className="lg:w-[50%]">
-            <p className="flex items-center font-lato text-base md:text-[18px] lg:max-w-[70%] text-white font-[700] mb-5">
+          <div className="lg:w-[50%] mb-8 lg:mb-0">
+            <p className="flex items-center font-lato text-sm md:text-[18px] lg:max-w-[70%] text-white font-[700] mb-4">
               <IoLocationOutline
-                size={30}
-                className="md:size-[40px] flex-shrink-0"
+                size={24}
+                className="md:size-[40px] flex-shrink-0 mr-1"
                 color="#fff"
               />
               <span>
@@ -810,38 +804,44 @@ const MergedHeroPropertyComponent = () => {
                 Sector 4, Greater Noida
               </span>
             </p>
-            <p className="flex items-center font-lato italic text-lg text-white font-[700] gap-2 mb-4 lg:pl-[5px]">
-              <FaRegClock size={30} className="flex-shrink" color="#fff" />
+            <p className="flex items-center font-lato italic text-base text-white font-[700] gap-1 mb-4 lg:pl-[5px]">
+              <FaRegClock size={24} className="flex-shrink" color="#fff" />
               <span>10AM Onwards</span>
             </p>
-            <div className="text-white text-[40px] lg:text-[50px] leading-[60px] font-chronicle">
-              <p>The Gaurs</p>
-              <p className="text-[70px] lg:text-[80px]">Sarovar Premiere</p>
+            <div className="text-white font-chronicle mt-4">
+              <p className="text-[28px] lg:text-[42px] leading-tight">
+                The Gaurs
+              </p>
+              <p className="text-[42px] lg:text-[64px] leading-tight">
+                Sarovar Premiere
+              </p>
             </div>
           </div>
           <div className="lg:w-[50%] flex flex-col items-center justify-between">
-            <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] text-center font-chronicle mt-6 px-4">
+            <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle mt-4 px-4 drop-shadow-md">
               Don't Miss,{" "}
               <span className="underline-gold-gradient font-bold">
                 Register
               </span>{" "}
               Yourself.
             </h2>
-            <div className="w-full max-w-md mx-auto lg:max-w-[60%] bg-white/15 backdrop-blur-sm p-4 sm:p-[5%] font-lato italic text-white z-20 rounded-md">
+            <div className="w-full max-w-sm mx-auto lg:max-w-[60%] bg-white/15 backdrop-blur-sm p-4 sm:p-[5%] font-lato italic text-white z-20 rounded-md mt-6">
               <div>
-                <p className="text-left text-lg sm:text-[26px] mb-6 sm:mb-8 leading-relaxed">
+                <p className="text-left text-base sm:text-[22px] mb-4 sm:mb-6 leading-relaxed">
                   Let's Make Your <br />
                   Dream Home Reality!
                 </p>
                 <MultiStepForm />
               </div>
             </div>
-            <div className="h-[10%]" />
+            <div className="h-4 sm:h-8" />
           </div>
         </div>
       </motion.div>
 
-      <div className="h-[1200vh]" />
+      {/* This div creates the scrollable space. Its height is now calculated
+           to provide a much better pacing for the number of sections you have. */}
+      <div style={{ height: "800vh" }} />
 
       <motion.div
         className="fixed inset-0 w-full z-80 bg-[#171A34]"
@@ -853,11 +853,11 @@ const MergedHeroPropertyComponent = () => {
       >
         <motion.div
           ref={finalSectionRef}
-          className="w-full h-full flex flex-col p-4 pt-20 sm:pt-4 overflow-y-scroll no-scrollbar"
+          className="w-full h-full flex flex-col p-4 pt-16 sm:pt-4 overflow-y-scroll no-scrollbar"
         >
           <div className="w-full flex flex-col items-center justify-start max-w-7xl mx-auto mb-10">
             <ScrollReveal>
-              <h2 className="text-white text-[28px] sm:text-[32px] md:text-[40px] text-center font-chronicle px-4">
+              <h2 className="text-white text-[24px] sm:text-[32px] md:text-[40px] text-center font-chronicle px-4">
                 <span className="underline-gold-gradient font-bold">
                   Voices
                 </span>{" "}
@@ -872,7 +872,7 @@ const MergedHeroPropertyComponent = () => {
                   className="cursor-pointer flex-shrink-0"
                   onClick={prevTestimonial}
                 />
-                <div className="w-full flex items-center justify-center transition-transform relative overflow-hidden min-h-[420px] sm:min-h-0 sm:h-[290px]">
+                <div className="w-full flex items-center justify-center transition-transform relative overflow-hidden min-h-[380px] sm:min-h-0 sm:h-[290px]">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentTestimonial}
@@ -887,22 +887,22 @@ const MergedHeroPropertyComponent = () => {
                         alt="person"
                         height={320}
                         width={250}
-                        className="w-[150px] sm:w-[223px] h-auto object-cover z-10"
+                        className="w-[120px] sm:w-[223px] h-auto object-cover z-10"
                         quality={75}
                       />
-                      <div className="w-full sm:w-[65%] sm:ml-[-40px] mt-[-50px] sm:mt-0 pt-[60px] sm:pt-[40px] bg-white rounded-md px-4 py-4 sm:px-8 shadow-md z-0">
-                        <p className="font-chronicle text-lg sm:text-[28px] text-[#0F0F0F] mb-2 pl-[5%]">
+                      <div className="w-full sm:w-[65%] sm:ml-[-40px] mt-[-30px] sm:mt-0 pt-[40px] sm:pt-[40px] bg-white rounded-md px-4 py-4 sm:px-8 shadow-md z-0">
+                        <p className="font-chronicle text-base sm:text-[28px] text-[#0F0F0F] mb-1 pl-[5%]">
                           {testimonials[currentTestimonial].name}{" "}
                           <span className="text-xs sm:text-[15px] italic">
                             {testimonials[currentTestimonial].title}
                           </span>
                         </p>
-                        <p className="font-lato italic text-sm sm:text-[16px] text-[#888888] font-light pl-[5%]">
+                        <p className="font-lato italic text-xs sm:text-[16px] text-[#888888] font-light pl-[5%]">
                           {testimonials[currentTestimonial].text}
                         </p>
-                        <div className="flex mt-4 sm:mt-6 mb-3 justify-end">
+                        <div className="flex mt-3 sm:mt-6 mb-2 justify-end">
                           {[...Array(5)].map((_, i) => (
-                            <IoIosStar key={i} size={14} color="#E2B110" />
+                            <IoIosStar key={i} size={12} color="#E2B110" />
                           ))}
                         </div>
                       </div>
@@ -923,26 +923,27 @@ const MergedHeroPropertyComponent = () => {
               <Image
                 src="/FooterBG.png"
                 alt="Footer Background"
-                layout="fill"
-                objectFit="cover"
+                fill
+                sizes="100vw"
+                style={{ objectFit: "cover" }}
                 className="z-0"
                 quality={70}
               />
-              <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center w-full px-[5%] py-6 sm:px-[10%] sm:py-8 gap-6">
+              <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center w-full px-[5%] py-6 sm:px-[10%] sm:py-8 gap-4 sm:gap-6">
                 <Image
                   src="/HeroLogo.png"
                   alt="Logo"
-                  width={250}
-                  height={125}
-                  className="object-contain w-[150px] sm:w-[250px]"
+                  width={200}
+                  height={100}
+                  className="object-contain w-[120px] sm:w-[200px]"
                 />
-                <nav className="flex flex-wrap justify-center sm:justify-between grow gap-x-6 sm:gap-x-14 font-lato italic text-base lg:pr-[10%] lg:pl-[5%] text-white ">
+                <nav className="flex flex-wrap justify-center sm:justify-between grow gap-x-4 sm:gap-x-10 font-lato italic text-sm lg:pr-[10%] lg:pl-[5%] text-white ">
                   {["Event", "Gallery", "Location", "Contact Us"].map(
                     (text, i) => (
                       <a
                         key={i}
                         href="#"
-                        className="hover:underline transition-colors text-lg"
+                        className="hover:underline transition-colors text-base"
                       >
                         {text}
                       </a>
@@ -951,12 +952,12 @@ const MergedHeroPropertyComponent = () => {
                 </nav>
               </div>
             </footer>
-            <div className="relative z-10 w-full px-[5%] sm:px-[10%]">
-              <div className="flex flex-col-reverse sm:flex-row w-full justify-between items-center text-white text-sm gap-4 py-4">
-                <p className="mt-4 sm:mt-0 text-center text-xs sm:text-sm">
+            <div className="relative z-10 w-full px-[5%] sm:px-[10%] bg-[#171A34]">
+              <div className="flex flex-col-reverse sm:flex-row w-full justify-between items-center text-white text-sm gap-3 py-3">
+                <p className="mt-3 sm:mt-0 text-center text-xs sm:text-sm">
                   All copyright reserved @2025
                 </p>
-                <div className="flex gap-x-5">
+                <div className="flex gap-x-4">
                   {[FiFacebook, FiInstagram, FiLinkedin, FiTwitter].map(
                     (Icon, idx) => (
                       <a
@@ -966,7 +967,7 @@ const MergedHeroPropertyComponent = () => {
                         rel="noopener noreferrer"
                         className="hover:opacity-80 transition-opacity"
                       >
-                        <Icon size={20} />
+                        <Icon size={18} />
                       </a>
                     )
                   )}
